@@ -1,0 +1,33 @@
+---
+interface Props {
+  title: string;
+  image: string;
+  url: string;
+  count?: number;
+}
+
+const { title, image, url, count } = Astro.props;
+---
+
+<a href={url} class="group relative overflow-hidden rounded-lg shadow-md">
+  <div class="aspect-[4/3] overflow-hidden">
+    <img 
+      src={image} 
+      alt={title} 
+      class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500 ease-in-out" 
+      loading="lazy"
+    />
+  </div>
+  
+  <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-4">
+    <h3 class="text-xl font-bold text-white mb-1 group-hover:text-sunset transition-colors font-inter">
+      {title}
+    </h3>
+    
+    {count !== undefined && 
+      <p class="text-white/80 text-sm">
+        {count} {count === 1 ? 'Adventure' : 'Adventures'}
+      </p>
+    }
+  </div>
+</a>

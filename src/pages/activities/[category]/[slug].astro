@@ -1,0 +1,23 @@
+---
+import { getCollection } from 'astro:content';
+import ActivityLayout from '../../../layouts/ActivityLayout.astro';
+
+export async function getStaticPaths() {
+  const activities = await getCollection('activities');
+  
+  return activities.map(activity => ({
+    params: { 
+      category: activity.data.category.toLowerCase().replace(/ /g, '-'),
+      slug: activity.slug 
+    },
+    props: { activity }
+  }));
+}
+
+const { activity } = Astro.props;
+const { Content } = await activity.render();
+---
+
+<ActivityLayout frontmatter={activity.data}>
+  <Content />
+</ActivityLayout>

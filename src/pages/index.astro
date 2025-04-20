@@ -1,0 +1,169 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import FeatureCard from '../components/FeatureCard.astro';
+import CategoryCard from '../components/CategoryCard.astro';
+import { getCollection } from 'astro:content';
+
+// Get all activities and experiences
+const allActivities = await getCollection('activities');
+const allExperiences = await getCollection('experiences');
+
+// Combine and find featured items
+const allItems = [...allActivities, ...allExperiences];
+const featuredItems = allItems.filter(item => item.data.featured).slice(0, 5);
+
+// Get activity categories
+const activityCategories = [...new Set(allActivities.map(item => item.data.category))];
+const categories = [
+  {
+    title: 'Trail Running',
+    image: 'https://images.unsplash.com/photo-1528127269322-539801943592',
+    url: '/activities/trail-running',
+    count: allActivities.filter(item => item.data.category === 'Trail Running').length
+  },
+  {
+    title: 'Hiking',
+    image: 'https://images.unsplash.com/photo-1502747812021-0ae746b6c23f',
+    url: '/activities/hiking',
+    count: allActivities.filter(item => item.data.category === 'Hiking').length
+  },
+  {
+    title: 'Climbing',
+    image: 'https://images.unsplash.com/photo-1504699439244-a7e34870c35d',
+    url: '/activities/climbing',
+    count: allActivities.filter(item => item.data.category === 'Climbing').length
+  },
+  {
+    title: 'Experiences',
+    image: 'https://images.unsplash.com/photo-1598430772299-8412a84ea34f',
+    url: '/experiences',
+    count: allExperiences.length
+  }
+];
+---
+
+<BaseLayout title="Home - Discover Vietnam's Outdoor Adventures">
+  <Hero 
+    title="Discover Vietnam's Outdoor Adventure Paradise" 
+    subtitle="Explore trail running, hiking, climbing, and unique experiences across Vietnam's diverse landscapes"
+    image="https://images.unsplash.com/photo-1517475020140-cd7f966b0523"
+    fullHeight={true}
+    overlayColor="rgba(43, 83, 41, 0.5)"
+  />
+  
+  <section class="py-16 bg-cream">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-forest mb-12 text-center font-inter">Featured Adventures</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {featuredItems.map((item) => {
+          const url = `/activities/${item.data.category.toLowerCase().replace(/ /g, '-')}/${item.slug}`;
+          
+          return (
+            <FeatureCard
+              title={item.data.title}
+              description={item.data.description}
+              image={item.data.coverImage}
+              url={url}
+              tags={item.data.tags.slice(0, 3)}
+              featured={item.data.featured}
+            />
+          );
+        })}
+      </div>
+      
+      <div class="text-center mt-12">
+        <a href="/activities" class="inline-block bg-forest text-white px-6 py-3 rounded-lg hover:bg-forest/90 transition-colors font-medium">
+          Browse All Adventures
+        </a>
+      </div>
+    </div>
+  </section>
+  
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-forest mb-6 text-center font-inter">Explore by Category</h2>
+      <p class="text-center text-charcoal mb-12 max-w-2xl mx-auto">Find your next adventure across Vietnam's diverse landscape, from mountain trails to limestone caves and everything in between.</p>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {categories.map((category) => (
+          <CategoryCard
+            title={category.title}
+            image={category.image}
+            url={category.url}
+            count={category.count}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <section class="py-16 bg-forest text-white">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row items-center">
+        <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
+          <h2 class="text-3xl font-bold mb-4 font-inter">Why Explore Vietnam's Outdoors?</h2>
+          <p class="mb-6">Vietnam offers an incredible diversity of outdoor adventures, from the northern mountains to the central highlands and coastal regions. With a rich cultural backdrop and stunning landscapes, it's an adventure traveler's paradise waiting to be discovered.</p>
+          
+          <ul class="space-y-4">
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-sunset mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>Diverse environments from mountains to beaches</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-sunset mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>Year-round adventure opportunities</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-sunset mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>Cultural experiences alongside natural wonders</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-sunset mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>Emerging destination with untouched routes</span>
+            </li>
+          </ul>
+          
+          <a href="/about" class="inline-block mt-6 bg-sunset text-white px-6 py-3 rounded-lg hover:bg-sunset/90 transition-colors font-medium">
+            Learn More
+          </a>
+        </div>
+        
+        <div class="md:w-1/2">
+          <div class="relative rounded-lg overflow-hidden aspect-video shadow-xl">
+            <img 
+              src="https://images.unsplash.com/photo-1555041071-a375ca2bdd64" 
+              alt="Rice terraces in northern Vietnam" 
+              class="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="py-16 bg-cream">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold text-forest mb-6 font-inter">Ready for Adventure?</h2>
+      <p class="text-charcoal mb-10 max-w-2xl mx-auto">Explore our comprehensive guides, find your perfect activity, and start planning your outdoor adventure in Vietnam today.</p>
+      
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="/activities" class="bg-forest text-white px-6 py-3 rounded-lg hover:bg-forest/90 transition-colors font-medium">
+          Browse Activities
+        </a>
+        <a href="/contact" class="bg-white text-forest border border-forest px-6 py-3 rounded-lg hover:bg-gray-50 transition-colors font-medium">
+          Contact Us
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

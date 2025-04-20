@@ -1,0 +1,80 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import ImageGallery from '../components/ImageGallery.astro';
+import TrailMap from '../components/TrailMap.astro';
+
+const { frontmatter } = Astro.props;
+const { title, description, coverImage, imageGallery, difficulty, location, distance, elevation, duration, category, mapCoordinates } = frontmatter;
+---
+
+<BaseLayout title={title} description={description}>
+  <Hero title={title} image={coverImage} />
+  
+  <div class="container mx-auto px-4 py-8">
+    <div class="flex flex-col lg:flex-row gap-8">
+      <div class="lg:w-2/3">
+        <div class="prose max-w-none">
+          <p class="text-xl font-medium mb-6 text-charcoal">{description}</p>
+          <slot />
+        </div>
+        
+        {imageGallery && imageGallery.length > 0 && (
+          <div class="mt-12">
+            <h2 class="text-2xl font-bold text-forest mb-4 font-inter">Gallery</h2>
+            <ImageGallery images={imageGallery} />
+          </div>
+        )}
+      </div>
+      
+      <div class="lg:w-1/3 space-y-8">
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <h2 class="text-xl font-bold text-forest mb-4 font-inter">Activity Details</h2>
+          <ul class="space-y-3">
+            <li class="flex items-center justify-between">
+              <span class="text-charcoal font-medium">Type:</span>
+              <span class="bg-forest text-white px-3 py-1 rounded-full text-sm">{category}</span>
+            </li>
+            <li class="flex items-center justify-between">
+              <span class="text-charcoal font-medium">Difficulty:</span>
+              <span class={`px-3 py-1 rounded-full text-sm ${
+                difficulty === 'Easy' ? 'bg-green-100 text-green-800' :
+                difficulty === 'Moderate' ? 'bg-yellow-100 text-yellow-800' :
+                'bg-red-100 text-red-800'
+              }`}>{difficulty}</span>
+            </li>
+            <li class="flex items-center justify-between">
+              <span class="text-charcoal font-medium">Location:</span>
+              <span class="text-charcoal">{location}</span>
+            </li>
+            {distance && (
+              <li class="flex items-center justify-between">
+                <span class="text-charcoal font-medium">Distance:</span>
+                <span class="text-charcoal">{distance}</span>
+              </li>
+            )}
+            {elevation && (
+              <li class="flex items-center justify-between">
+                <span class="text-charcoal font-medium">Elevation Gain:</span>
+                <span class="text-charcoal">{elevation}</span>
+              </li>
+            )}
+            {duration && (
+              <li class="flex items-center justify-between">
+                <span class="text-charcoal font-medium">Duration:</span>
+                <span class="text-charcoal">{duration}</span>
+              </li>
+            )}
+          </ul>
+        </div>
+        
+        {mapCoordinates && (
+          <div class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-bold text-forest mb-4 font-inter">Trail Map</h2>
+            <TrailMap coordinates={mapCoordinates} />
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+</BaseLayout>

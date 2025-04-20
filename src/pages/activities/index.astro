@@ -1,0 +1,136 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import CategoryCard from '../../components/CategoryCard.astro';
+import ActivityCard from '../../components/ActivityCard.astro';
+import { getCollection } from 'astro:content';
+
+// Get all activities
+const allActivities = await getCollection('activities');
+
+// Get unique categories
+const categories = [...new Set(allActivities.map(activity => activity.data.category))];
+
+// Create category objects with image and count
+const categoryObjects = categories.map(category => {
+  const activitiesInCategory = allActivities.filter(activity => activity.data.category === category);
+  // Find a representative image from the category
+  const representativeImage = activitiesInCategory[0]?.data.coverImage || '';
+  
+  return {
+    title: category,
+    url: `/activities/${category.toLowerCase().replace(/ /g, '-')}`,
+    count: activitiesInCategory.length,
+    image: representativeImage
+  };
+});
+
+// Get featured activities
+const featuredActivities = allActivities
+  .filter(activity => activity.data.featured)
+  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime())
+  .slice(0, 4);
+
+// Get recent activities
+const recentActivities = allActivities
+  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime())
+  .slice(0, 6);
+---
+
+<BaseLayout title="Outdoor Activities in Vietnam" description="Discover the best outdoor activities in Vietnam, from trail running and hiking to rock climbing and more.">
+  <Hero 
+    title="Outdoor Activities in Vietnam" 
+    subtitle="Explore trail running, hiking, climbing, and more across Vietnam's diverse landscapes"
+    image="https://images.unsplash.com/photo-1502747812021-0ae746b6c23f"
+  />
+  
+  <section class="py-16 bg-cream">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-forest mb-8 font-inter">Activity Categories</h2>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {categoryObjects.map((category) => (
+          <CategoryCard
+            title={category.title}
+            image={category.image}
+            url={category.url}
+            count={category.count}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-forest mb-8 font-inter">Featured Activities</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {featuredActivities.map((activity) => {
+          const url = `/activities/${activity.data.category.toLowerCase().replace(/ /g, '-')}/${activity.slug}`;
+          
+          return (
+            <ActivityCard
+              title={activity.data.title}
+              description={activity.data.description}
+              image={activity.data.coverImage}
+              url={url}
+              difficulty={activity.data.difficulty}
+              location={activity.data.location}
+              duration={activity.data.duration}
+            />
+          );
+        })}
+      </div>
+      
+      <div class="text-center mt-10">
+        <a href="/activities/all" class="inline-block bg-forest text-white px-6 py-3 rounded-lg hover:bg-forest/90 transition-colors font-medium">
+          View All Activities
+        </a>
+      </div>
+    </div>
+  </section>
+  
+  <section class="py-16 bg-cream">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-forest mb-8 font-inter">Recently Added</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {recentActivities.map((activity) => {
+          const url = `/activities/${activity.data.category.toLowerCase().replace(/ /g, '-')}/${activity.slug}`;
+          
+          return (
+            <ActivityCard
+              title={activity.data.title}
+              description={activity.data.description}
+              image={activity.data.coverImage}
+              url={url}
+              difficulty={activity.data.difficulty}
+              location={activity.data.location}
+              duration={activity.data.duration}
+            />
+          );
+        })}
+      </div>
+    </div>
+  </section>
+  
+  <section class="py-16 bg-forest text-white">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold mb-6 font-inter">Discover Your Next Adventure</h2>
+      <p class="text-lg mb-8 max-w-2xl mx-auto">
+        From the northern mountains of Sapa to the limestone karsts of Halong Bay, 
+        Vietnam offers countless opportunities for outdoor enthusiasts.
+      </p>
+      
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="/contact" class="bg-sunset text-white px-6 py-3 rounded-lg hover:bg-sunset/90 transition-colors font-medium">
+          Get Custom Recommendations
+        </a>
+        <a href="/experiences" class="bg-transparent text-white border border-white px-6 py-3 rounded-lg hover:bg-white/10 transition-colors font-medium">
+          Browse Guided Experiences
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

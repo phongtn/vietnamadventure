@@ -1,0 +1,87 @@
+---
+interface Props {
+  coordinates: {
+    center: [number, number];
+    routes?: Array<{
+      points: Array<[number, number]>;
+      color?: string;
+    }>;
+    markers?: Array<{
+      position: [number, number];
+      title?: string;
+      description?: string;
+    }>;
+  };
+}
+
+const { coordinates } = Astro.props;
+const mapId = `map-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<div id={mapId} class="w-full h-80 bg-gray-200 rounded-lg relative">
+  <div class="absolute inset-0 flex items-center justify-center bg-gray-100 rounded-lg">
+    <p class="text-center text-gray-500">Loading map...</p>
+  </div>
+</div>
+
+<script define:vars={{ mapId, coordinates }}>
+  // Initialize the map once the page loads
+  document.addEventListener('DOMContentLoaded', function() {
+    // Check if leaflet is loaded, if not load it
+    if (!window.L) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'https://unpkg.com/leaflet@1.7.1/dist/leaflet.css';
+      document.head.appendChild(link);
+      
+      const script = document.createElement('script');
+      script.src = 'https://unpkg.com/leaflet@1.7.1/dist/leaflet.js';
+      document.head.appendChild(script);
+      
+      script.onload = () => initializeMap();
+    } else {
+      initializeMap();
+    }
+  });
+  
+  function initializeMap() {
+    if (!window.L) {
+      console.error('Leaflet library not loaded');
+      return;
+    }
+    
+    // Initialize the map
+    const map = L.map(mapId).setView(coordinates.center, 13);
+    
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    
+    // Add routes if available
+    if (coordinates.routes && coordinates.routes.length > 0) {
+      coordinates.routes.forEach(route => {
+        const polyline = L.polyline(route.points, {
+          color: route.color || '#FF6B35',
+          weight: 5,
+          opacity: 0.7
+        }).addTo(map);
+        
+        map.fitBounds(polyline.getBounds());
+      });
+    }
+    
+    // Add markers if available
+    if (coordinates.markers && coordinates.markers.length > 0) {
+      coordinates.markers.forEach(marker => {
+        const popupContent = marker.title ? 
+          `<strong>${marker.title}</strong>${marker.description ? `<br>${marker.description}` : ''}` : 
+          '';
+        
+        L.marker(marker.position)
+          .addTo(map)
+          .bindPopup(popupContent);
+      });
+    }
+  }
+</script>

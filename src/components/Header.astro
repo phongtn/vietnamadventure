@@ -1,0 +1,76 @@
+---
+const isActive = (path: string) => Astro.url.pathname.startsWith(path);
+---
+
+<header class="bg-white shadow-md sticky top-0 z-50">
+  <div class="container mx-auto px-4">
+    <nav class="flex items-center justify-between h-16 md:h-20">
+      <a href="/" class="text-2xl font-bold text-forest font-inter flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+          <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+          <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+          <line x1="6" y1="1" x2="6" y2="4"></line>
+          <line x1="10" y1="1" x2="10" y2="4"></line>
+          <line x1="14" y1="1" x2="14" y2="4"></line>
+        </svg>
+        VietnamADV
+      </a>
+      
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center space-x-8">
+        <a href="/" class={`font-medium hover:text-sunset transition ${isActive('/') && Astro.url.pathname === '/' ? 'text-sunset font-semibold' : 'text-charcoal'}`}>Home</a>
+        <a href="/activities" class={`font-medium hover:text-sunset transition ${isActive('/activities') ? 'text-sunset font-semibold' : 'text-charcoal'}`}>Activities</a>
+        <a href="/experiences" class={`font-medium hover:text-sunset transition ${isActive('/experiences') ? 'text-sunset font-semibold' : 'text-charcoal'}`}>Experiences</a>
+        <a href="/about" class={`font-medium hover:text-sunset transition ${isActive('/about') ? 'text-sunset font-semibold' : 'text-charcoal'}`}>About</a>
+        <a href="/contact" class={`font-medium hover:text-sunset transition ${isActive('/contact') ? 'text-sunset font-semibold' : 'text-charcoal'}`}>Contact</a>
+      </div>
+      
+      <!-- Mobile Navigation Button -->
+      <div class="md:hidden" x-data="{ open: false }">
+        <button 
+          @click="open = !open" 
+          class="text-charcoal focus:outline-none"
+          aria-label="Toggle menu"
+        >
+          <svg 
+            x-show="!open" 
+            xmlns="http://www.w3.org/2000/svg" 
+            class="h-6 w-6" 
+            fill="none" 
+            viewBox="0 0 24 24" 
+            stroke="currentColor"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg 
+            x-show="open" 
+            xmlns="http://www.w3.org/2000/svg" 
+            class="h-6 w-6" 
+            fill="none" 
+            viewBox="0 0 24 24" 
+            stroke="currentColor"
+            style="display: none;"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        
+        <!-- Mobile Navigation Menu -->
+        <div 
+          x-show="open" 
+          @click.away="open = false" 
+          class="absolute top-16 left-0 right-0 bg-white shadow-lg p-4"
+          style="display: none;"
+        >
+          <div class="flex flex-col space-y-4">
+            <a href="/" class={`font-medium py-2 ${isActive('/') && Astro.url.pathname === '/' ? 'text-sunset font-semibold' : 'text-charcoal'}`}>Home</a>
+            <a href="/activities" class={`font-medium py-2 ${isActive('/activities') ? 'text-sunset font-semibold' : 'text-charcoal'}`}>Activities</a>
+            <a href="/experiences" class={`font-medium py-2 ${isActive('/experiences') ? 'text-sunset font-semibold' : 'text-charcoal'}`}>Experiences</a>
+            <a href="/about" class={`font-medium py-2 ${isActive('/about') ? 'text-sunset font-semibold' : 'text-charcoal'}`}>About</a>
+            <a href="/contact" class={`font-medium py-2 ${isActive('/contact') ? 'text-sunset font-semibold' : 'text-charcoal'}`}>Contact</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>

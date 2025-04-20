@@ -1,0 +1,53 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  image: string;
+  url: string;
+  tags?: string[];
+  featured?: boolean;
+}
+
+const { title, description, image, url, tags = [], featured = false } = Astro.props;
+
+const cardSize = featured ? "col-span-1 md:col-span-2 row-span-2" : "col-span-1";
+---
+
+<a 
+  href={url} 
+  class={`group ${cardSize} bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300`}
+>
+  <div class="h-48 md:h-64 overflow-hidden relative">
+    <img 
+      src={image} 
+      alt={title} 
+      class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" 
+      loading="lazy"
+    />
+    {featured && 
+      <div class="absolute top-4 left-4 bg-sunset text-white px-3 py-1 rounded-full text-sm font-medium">
+        Featured
+      </div>
+    }
+  </div>
+  
+  <div class="p-5">
+    <h3 class="text-xl font-bold text-charcoal mb-2 group-hover:text-forest transition-colors font-inter">
+      {title}
+    </h3>
+    
+    <p class="text-gray-600 mb-4 line-clamp-2">
+      {description}
+    </p>
+    
+    {tags.length > 0 && 
+      <div class="flex flex-wrap gap-2">
+        {tags.map(tag => (
+          <span class="bg-cream text-forest px-2 py-1 rounded-full text-xs">
+            {tag}
+          </span>
+        ))}
+      </div>
+    }
+  </div>
+</a>
