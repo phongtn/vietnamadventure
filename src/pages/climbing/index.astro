@@ -1,0 +1,410 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import HeroSection from '../../components/HeroSection.astro';
+import AdventureCard from '../../components/AdventureCard.astro';
+import FilterBar from '../../components/FilterBar.astro';
+import Newsletter from '../../components/Newsletter.astro';
+
+// Climbing adventures data
+const climbingSpots = [
+  {
+    title: "Cat Ba Island Rock Climbing",
+    location: "Hai Phong",
+    difficulty: "Moderate",
+    duration: "1-3 Days",
+    image: "https://images.unsplash.com/photo-1472087982327-49192446ed6b",
+    link: "/climbing/cat-ba-island",
+    featured: true
+  },
+  {
+    title: "Huu Lung Climbing Area",
+    location: "Lang Son Province",
+    difficulty: "Moderate to Difficult",
+    duration: "1-2 Days",
+    image: "https://images.unsplash.com/photo-1504699439244-a7e34870c35d",
+    link: "/climbing/huu-lung",
+    featured: false
+  },
+  {
+    title: "Quoc Oai Limestone",
+    location: "Hanoi Outskirts",
+    difficulty: "Moderate",
+    duration: "Day Trip",
+    image: "https://images.unsplash.com/photo-1526139334526-f591a54b477c",
+    link: "/climbing/quoc-oai",
+    featured: false
+  },
+  {
+    title: "Bai Boi Beach Bouldering",
+    location: "Quang Ninh Province",
+    difficulty: "Easy to Moderate",
+    duration: "Day Trip",
+    image: "https://images.unsplash.com/photo-1529271230144-e8c648ef570d",
+    link: "/climbing/bai-boi-beach",
+    featured: false
+  },
+  {
+    title: "Thung Nai Crags",
+    location: "Hoa Binh Province",
+    difficulty: "Difficult",
+    duration: "1-2 Days",
+    image: "https://images.unsplash.com/photo-1533497394934-b33cd9695ba9",
+    link: "/climbing/thung-nai-crags",
+    featured: false
+  },
+  {
+    title: "Da Dung Mountain",
+    location: "Tay Ninh Province",
+    difficulty: "Moderate",
+    duration: "Day Trip",
+    image: "https://images.unsplash.com/photo-1529271230144-e8c648ef570d",
+    link: "/climbing/da-dung-mountain",
+    featured: false
+  }
+];
+
+// Filter options specifically for climbing
+const durations = [
+  { value: 'day-trip', label: 'Day Trip' },
+  { value: '1-2-days', label: '1-2 Days' },
+  { value: '3-plus-days', label: '3+ Days' },
+];
+
+const regions = [
+  { value: 'north', label: 'North Vietnam' },
+  { value: 'central', label: 'Central Vietnam' },
+  { value: 'south', label: 'South Vietnam' },
+];
+
+// Climbing-specific features
+const climbTypes = [
+  { value: 'sport', label: 'Sport Climbing' },
+  { value: 'bouldering', label: 'Bouldering' },
+  { value: 'trad', label: 'Traditional' },
+  { value: 'deep-water', label: 'Deep Water Solo' },
+  { value: 'multi-pitch', label: 'Multi-Pitch' },
+];
+---
+
+<Layout 
+  title="Rock Climbing in Vietnam" 
+  description="Discover Vietnam's emerging rock climbing destinations, from limestone karsts to beach bouldering. Find guides for all skill levels."
+  image="https://images.unsplash.com/photo-1472087982327-49192446ed6b"
+>
+  <!-- Hero Section -->
+  <HeroSection
+    title="Rock Climbing in Vietnam"
+    subtitle="Scale stunning limestone karsts, try deep water soloing, and discover Vietnam's growing climbing scene"
+    backgroundImage="https://images.unsplash.com/photo-1529271230144-e8c648ef570d"
+    buttonText="Find Climbing Spots"
+    buttonLink="#climbing-spots"
+  />
+  
+  <!-- Introduction -->
+  <section class="py-12 bg-white">
+    <div class="container-custom">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-inter font-bold mb-6">Vertical Vietnam</h2>
+        <p class="text-lg text-text/80 mb-4">
+          Vietnam may be relatively new to the global climbing scene, but its incredible limestone formations provide a playground for climbers of all levels. From the iconic karst landscapes of Ha Long Bay to the emerging crags around Hanoi, Vietnam offers unique climbing experiences in spectacular settings.
+        </p>
+        <p class="text-lg text-text/80">
+          Our climbing guides provide detailed information on routes, difficulty levels, access, recommended seasons, and local climbing communities to help you plan your vertical adventure in Vietnam.
+        </p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Filter Section -->
+  <section id="climbing-spots" class="py-12 bg-background">
+    <div class="container-custom">
+      <h2 class="text-3xl font-inter font-bold mb-8">Explore Climbing Destinations</h2>
+      
+      <FilterBar 
+        difficulties={[
+          { value: 'easy', label: 'Easy (5.5-5.8)' },
+          { value: 'moderate', label: 'Moderate (5.9-5.11)' },
+          { value: 'difficult', label: 'Difficult (5.12+)' },
+          { value: 'mixed', label: 'Mixed Levels' },
+        ]}
+        durations={durations}
+        regions={regions}
+        activities={climbTypes}
+      />
+      
+      <!-- Climbing Destinations -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {climbingSpots.map(spot => (
+          <AdventureCard
+            title={spot.title}
+            location={spot.location}
+            difficulty={spot.difficulty}
+            duration={spot.duration}
+            image={spot.image}
+            link={spot.link}
+            featured={spot.featured}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Climbing Seasons & Types -->
+  <section class="py-16 bg-white">
+    <div class="container-custom">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="order-2 lg:order-1 relative">
+          <img 
+            src="https://images.unsplash.com/photo-1472087982327-49192446ed6b" 
+            alt="Rock climbing on limestone in Vietnam"
+            class="rounded-lg shadow-xl object-cover h-[500px] w-full"
+          />
+          <div class="absolute -bottom-6 -left-6 bg-background p-4 rounded-lg shadow-lg max-w-xs hidden md:block">
+            <p class="font-inter font-semibold mb-1">Climbing Grades</p>
+            <p class="text-sm text-text/80">
+              Most climbing areas in Vietnam use the French sport climbing grading system, with routes ranging from 5a (beginner) to 8b+ (expert).
+            </p>
+          </div>
+        </div>
+        
+        <div class="order-1 lg:order-2">
+          <h2 class="text-3xl font-inter font-bold mb-6">Vietnam's Climbing Scene</h2>
+          
+          <div class="space-y-6">
+            <div>
+              <h3 class="font-inter text-xl font-semibold mb-2">Climbing Types</h3>
+              <p class="text-text/80 mb-4">
+                Vietnam offers diverse climbing experiences with these primary styles:
+              </p>
+              <ul class="space-y-2">
+                <li class="flex items-start">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span><strong>Sport Climbing</strong> - Most developed in Cat Ba and Ha Long Bay area</span>
+                </li>
+                <li class="flex items-start">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span><strong>Deep Water Soloing</strong> - Unique climbing over water in Ha Long Bay</span>
+                </li>
+                <li class="flex items-start">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span><strong>Bouldering</strong> - Growing areas near Hanoi and beach locations</span>
+                </li>
+                <li class="flex items-start">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span><strong>Multi-pitch</strong> - Limited but developing on taller formations</span>
+                </li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 class="font-inter text-xl font-semibold mb-2">Best Climbing Seasons</h3>
+              <p class="text-text/80 mb-2">
+                The ideal climbing window for most of Vietnam is from October to April, offering cooler temperatures and dry conditions.
+              </p>
+              <ul class="space-y-2">
+                <li class="flex items-start">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span><strong>Prime Season:</strong> November to February - perfect friction and temperatures</span>
+                </li>
+                <li class="flex items-start">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span><strong>Shoulder Season:</strong> October and March-April - still good but variable</span>
+                </li>
+                <li class="flex items-start">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-secondary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                  <span><strong>Avoid:</strong> May to September - humid, hot, with frequent rain</span>
+                </li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 class="font-inter text-xl font-semibold mb-2">Local Climbing Community</h3>
+              <p class="text-text/80">
+                Vietnam's climbing community is small but growing rapidly. Connect with local climbers through gyms in Hanoi (VietClimb), Ho Chi Minh City (Saigon Climbing Center), and through the "Vietnam Climbing" Facebook group. Local climbers often share beta, can help with transportation, and sometimes offer crash pads for rent.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Essential Climbing Gear -->
+  <section class="py-16 bg-background">
+    <div class="container-custom">
+      <h2 class="text-3xl font-inter font-bold mb-10 text-center">Essential Climbing Gear</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <h3 class="text-xl font-inter font-semibold mb-4 text-center">Sport Climbing</h3>
+          <ul class="space-y-3">
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Climbing shoes</strong> - All-around or slightly aggressive</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Harness</strong> - Comfortable for long routes</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Rope</strong> - 60-70m single rope</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>12-14 quickdraws</strong> - Routes can be long</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Belay device</strong> - ATC or GriGri</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Helmet</strong> - Some areas have loose rock</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Chalk bag</strong> - Humidity makes this essential</span>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <h3 class="text-xl font-inter font-semibold mb-4 text-center">Bouldering</h3>
+          <ul class="space-y-3">
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Climbing shoes</strong> - More aggressive fit preferred</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Crash pad</strong> - Essential for safety</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Chalk bag or bucket</strong> - Loose chalk recommended</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Brush</strong> - For cleaning holds</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Comfortable approach shoes</strong> - Some access requires hiking</span>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <h3 class="text-xl font-inter font-semibold mb-4 text-center">Deep Water Solo</h3>
+          <ul class="space-y-3">
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Climbing shoes</strong> - Dedicated pair that can get wet</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Chalk bag</strong> - Expect to lose it in falls</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Quick-dry clothing</strong> - For comfort after falls</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Dry bag</strong> - For electronics and valuables</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Water shoes</strong> - For approaching the wall</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Sun protection</strong> - Water reflects sun intensely</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="mt-10 bg-white p-6 rounded-lg shadow-md">
+        <h3 class="text-xl font-inter font-semibold mb-4">Important Notes for Vietnam Climbing</h3>
+        <ul class="space-y-3">
+          <li class="flex items-start">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-secondary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            <span><strong>Gear Availability:</strong> Limited climbing gear is available in Vietnam. Bring what you need or purchase in advance from Hanoi/HCMC climbing gyms.</span>
+          </li>
+          <li class="flex items-start">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-secondary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            <span><strong>Route Conditions:</strong> Some bolts and anchors may be affected by sea air (especially in Ha Long/Cat Ba). Always check equipment before relying on it.</span>
+          </li>
+          <li class="flex items-start">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-secondary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            <span><strong>Access Issues:</strong> Always respect local regulations. Some areas require permits or guide accompaniment. Check our specific climbing area guides for details.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Newsletter -->
+  <Newsletter 
+    title="Stay Updated on Vietnam's Climbing Scene"
+    description="Subscribe for updates on new routes, climbing conditions, and local climbing events."
+  />
+</Layout>

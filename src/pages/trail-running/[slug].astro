@@ -1,0 +1,22 @@
+---
+import { getCollection } from 'astro:content';
+import ContentLayout from '../../layouts/ContentLayout.astro';
+
+// Generate paths for all trail running guides
+export async function getStaticPaths() {
+  const trailRunningEntries = await getCollection('trail-running');
+  return trailRunningEntries.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+// Get the entry directly from the prop
+const { entry } = Astro.props;
+// Render the content
+const { Content } = await entry.render();
+---
+
+<ContentLayout frontmatter={entry.data}>
+  <Content />
+</ContentLayout>

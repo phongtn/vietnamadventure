@@ -1,169 +1,302 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Hero from '../components/Hero.astro';
+import Layout from '../layouts/Layout.astro';
+import HeroSection from '../components/HeroSection.astro';
 import FeatureCard from '../components/FeatureCard.astro';
-import CategoryCard from '../components/CategoryCard.astro';
-import { getCollection } from 'astro:content';
+import CategorySection from '../components/CategorySection.astro';
+import AdventureCard from '../components/AdventureCard.astro';
+import Newsletter from '../components/Newsletter.astro';
 
-// Get all activities and experiences
-const allActivities = await getCollection('activities');
-const allExperiences = await getCollection('experiences');
+// Define featured activities and categories
+const featuredActivities = [
+  {
+    title: "Sapa Trail Running",
+    description: "Explore magnificent terraced rice fields on challenging mountain trails with breathtaking views of northern Vietnam.",
+    image: "https://images.unsplash.com/photo-1528127269322-539801943592",
+    link: "/trail-running/sapa-trails",
+    tagline: "Popular"
+  },
+  {
+    title: "Fansipan Summit Trek",
+    description: "Conquer Indochina's highest peak through ancient forests and alpine meadows on this unforgettable 2-day expedition.",
+    image: "https://images.unsplash.com/photo-1502747812021-0ae746b6c23f",
+    link: "/hiking/fansipan",
+    tagline: "Challenging"
+  },
+  {
+    title: "Cat Ba Island Rock Climbing",
+    description: "Scale stunning limestone karsts rising from emerald waters while enjoying world-class climbing routes for all skill levels.",
+    image: "https://images.unsplash.com/photo-1472087982327-49192446ed6b",
+    link: "/climbing/cat-ba-island",
+    tagline: "Must Try"
+  },
+];
 
-// Combine and find featured items
-const allItems = [...allActivities, ...allExperiences];
-const featuredItems = allItems.filter(item => item.data.featured).slice(0, 5);
-
-// Get activity categories
-const activityCategories = [...new Set(allActivities.map(item => item.data.category))];
 const categories = [
   {
-    title: 'Trail Running',
-    image: 'https://images.unsplash.com/photo-1528127269322-539801943592',
-    url: '/activities/trail-running',
-    count: allActivities.filter(item => item.data.category === 'Trail Running').length
+    title: "Trail Running",
+    description: "Fast-paced adventures on Vietnam's mountain paths",
+    image: "https://images.unsplash.com/photo-1489659831163-682b5af42225",
+    link: "/trail-running"
   },
   {
-    title: 'Hiking',
-    image: 'https://images.unsplash.com/photo-1502747812021-0ae746b6c23f',
-    url: '/activities/hiking',
-    count: allActivities.filter(item => item.data.category === 'Hiking').length
+    title: "Hiking & Trekking",
+    description: "From gentle day hikes to epic multi-day journeys",
+    image: "https://images.unsplash.com/photo-1571407298153-9a051d190225",
+    link: "/hiking"
   },
   {
-    title: 'Climbing',
-    image: 'https://images.unsplash.com/photo-1504699439244-a7e34870c35d',
-    url: '/activities/climbing',
-    count: allActivities.filter(item => item.data.category === 'Climbing').length
+    title: "Rock Climbing",
+    description: "Vertical adventures on limestone karsts and mountains",
+    image: "https://images.unsplash.com/photo-1529271230144-e8c648ef570d",
+    link: "/climbing"
+  }
+];
+
+const featuredAdventures = [
+  {
+    title: "Ba Vi Mountain Trail",
+    location: "Hanoi Province",
+    difficulty: "Moderate",
+    duration: "1 Day",
+    image: "https://images.unsplash.com/photo-1452626038306-9aae5e071dd3",
+    link: "/trail-running/ba-vi-mountain",
+    featured: true
   },
   {
-    title: 'Experiences',
-    image: 'https://images.unsplash.com/photo-1598430772299-8412a84ea34f',
-    url: '/experiences',
-    count: allExperiences.length
+    title: "Ha Giang Loop Trek",
+    location: "Ha Giang Province",
+    difficulty: "Difficult",
+    duration: "4 Days",
+    image: "https://images.unsplash.com/photo-1678099006439-dba9e4d3f9f5",
+    link: "/hiking/ha-giang-loop",
+    featured: false
+  },
+  {
+    title: "Huu Lung Climbing Area",
+    location: "Lang Son Province",
+    difficulty: "Moderate",
+    duration: "1-2 Days",
+    image: "https://images.unsplash.com/photo-1504699439244-a7e34870c35d",
+    link: "/climbing/huu-lung",
+    featured: false
+  },
+  {
+    title: "Phong Nha Caving",
+    location: "Quang Binh Province",
+    difficulty: "Challenging",
+    duration: "3 Days",
+    image: "https://images.unsplash.com/photo-1523065144972-e5f5c9ea6ed9",
+    link: "/adventures/phong-nha-caving",
+    featured: false
+  }
+];
+
+const testimonials = [
+  {
+    name: "Sarah J.",
+    text: "The Sapa trail running guide was incredibly detailed and helped me discover routes I would have never found on my own. Spectacular experience!",
+    location: "United States"
+  },
+  {
+    name: "Thomas L.",
+    text: "VietnamADV's hiking recommendations in Ha Giang were spot on. The detailed maps and local insights made our trek unforgettable.",
+    location: "Australia"
+  },
+  {
+    name: "Mai T.",
+    text: "As a local Vietnamese climber, I'm impressed by the accuracy and cultural sensitivity in their climbing guides. This platform is a treasure.",
+    location: "Vietnam"
   }
 ];
 ---
 
-<BaseLayout title="Home - Discover Vietnam's Outdoor Adventures">
-  <Hero 
-    title="Discover Vietnam's Outdoor Adventure Paradise" 
-    subtitle="Explore trail running, hiking, climbing, and unique experiences across Vietnam's diverse landscapes"
-    image="https://images.unsplash.com/photo-1517475020140-cd7f966b0523"
-    fullHeight={true}
-    overlayColor="rgba(43, 83, 41, 0.5)"
+<Layout 
+  title="Vietnam Outdoor Adventures" 
+  description="Discover Vietnam's most breathtaking outdoor adventures with our curated guides for trail running, hiking, climbing and nature activities."
+  image="https://images.unsplash.com/photo-1502747812021-0ae746b6c23f"
+>
+  <!-- Hero Section -->
+  <HeroSection
+    title="Discover Vietnam's Wild Side"
+    subtitle="Expert guides to the most breathtaking outdoor adventures across Vietnam's diverse landscapes"
+    backgroundImage="https://images.unsplash.com/photo-1502747812021-0ae746b6c23f"
+    buttonText="Explore Activities"
+    buttonLink="/adventures"
   />
   
-  <section class="py-16 bg-cream">
-    <div class="container mx-auto px-4">
-      <h2 class="text-3xl font-bold text-forest mb-12 text-center font-inter">Featured Adventures</h2>
+  <!-- Featured Activities -->
+  <section class="py-16">
+    <div class="container-custom">
+      <h2 class="text-3xl md:text-4xl font-inter font-bold mb-4 text-center">Featured Adventures</h2>
+      <p class="text-lg text-text/80 max-w-3xl mx-auto text-center mb-12">
+        Hand-picked outdoor experiences that showcase the best of Vietnam's natural beauty
+      </p>
       
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {featuredItems.map((item) => {
-          const url = `/activities/${item.data.category.toLowerCase().replace(/ /g, '-')}/${item.slug}`;
-          
-          return (
-            <FeatureCard
-              title={item.data.title}
-              description={item.data.description}
-              image={item.data.coverImage}
-              url={url}
-              tags={item.data.tags.slice(0, 3)}
-              featured={item.data.featured}
-            />
-          );
-        })}
-      </div>
-      
-      <div class="text-center mt-12">
-        <a href="/activities" class="inline-block bg-forest text-white px-6 py-3 rounded-lg hover:bg-forest/90 transition-colors font-medium">
-          Browse All Adventures
-        </a>
-      </div>
-    </div>
-  </section>
-  
-  <section class="py-16 bg-white">
-    <div class="container mx-auto px-4">
-      <h2 class="text-3xl font-bold text-forest mb-6 text-center font-inter">Explore by Category</h2>
-      <p class="text-center text-charcoal mb-12 max-w-2xl mx-auto">Find your next adventure across Vietnam's diverse landscape, from mountain trails to limestone caves and everything in between.</p>
-      
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {categories.map((category) => (
-          <CategoryCard
-            title={category.title}
-            image={category.image}
-            url={category.url}
-            count={category.count}
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {featuredActivities.map(activity => (
+          <FeatureCard 
+            title={activity.title} 
+            description={activity.description}
+            image={activity.image}
+            link={activity.link}
+            tagline={activity.tagline}
           />
         ))}
       </div>
     </div>
   </section>
   
-  <section class="py-16 bg-forest text-white">
-    <div class="container mx-auto px-4">
-      <div class="flex flex-col md:flex-row items-center">
-        <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
-          <h2 class="text-3xl font-bold mb-4 font-inter">Why Explore Vietnam's Outdoors?</h2>
-          <p class="mb-6">Vietnam offers an incredible diversity of outdoor adventures, from the northern mountains to the central highlands and coastal regions. With a rich cultural backdrop and stunning landscapes, it's an adventure traveler's paradise waiting to be discovered.</p>
+  <!-- Categories Section -->
+  <CategorySection
+    title="Find Your Outdoor Adventure"
+    subtitle="Vietnam offers a diverse range of outdoor activities across its breathtaking landscapes"
+    categories={categories}
+  />
+  
+  <!-- Why Choose Us -->
+  <section class="py-16 bg-white">
+    <div class="container-custom">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-inter font-bold mb-6">Why Explore With VietnamADV?</h2>
+          <p class="text-lg text-text/80 mb-8">
+            Our passion for Vietnam's natural beauty and outdoor adventures drives us to create the most comprehensive, authentic guides for outdoor enthusiasts.
+          </p>
           
-          <ul class="space-y-4">
-            <li class="flex items-start">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-sunset mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
-              <span>Diverse environments from mountains to beaches</span>
-            </li>
-            <li class="flex items-start">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-sunset mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
-              <span>Year-round adventure opportunities</span>
-            </li>
-            <li class="flex items-start">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-sunset mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
-              <span>Cultural experiences alongside natural wonders</span>
-            </li>
-            <li class="flex items-start">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-sunset mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
-              <span>Emerging destination with untouched routes</span>
-            </li>
-          </ul>
-          
-          <a href="/about" class="inline-block mt-6 bg-sunset text-white px-6 py-3 rounded-lg hover:bg-sunset/90 transition-colors font-medium">
-            Learn More
-          </a>
+          <div class="space-y-6">
+            <div class="flex">
+              <div class="flex-shrink-0 mr-4">
+                <div class="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <h3 class="font-inter text-xl font-semibold mb-2">Local Expertise</h3>
+                <p class="text-text/80">Our team combines foreign and Vietnamese outdoor enthusiasts with deep local knowledge.</p>
+              </div>
+            </div>
+            
+            <div class="flex">
+              <div class="flex-shrink-0 mr-4">
+                <div class="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <h3 class="font-inter text-xl font-semibold mb-2">Safety First</h3>
+                <p class="text-text/80">Detailed safety information, seasonal advice, and responsible tourism practices.</p>
+              </div>
+            </div>
+            
+            <div class="flex">
+              <div class="flex-shrink-0 mr-4">
+                <div class="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <h3 class="font-inter text-xl font-semibold mb-2">Community Connection</h3>
+                <p class="text-text/80">Connect with fellow adventurers and local guides for shared experiences.</p>
+              </div>
+            </div>
+          </div>
         </div>
         
-        <div class="md:w-1/2">
-          <div class="relative rounded-lg overflow-hidden aspect-video shadow-xl">
-            <img 
-              src="https://images.unsplash.com/photo-1555041071-a375ca2bdd64" 
-              alt="Rice terraces in northern Vietnam" 
-              class="w-full h-full object-cover"
-            />
-          </div>
+        <div class="relative">
+          <img 
+            src="https://images.unsplash.com/photo-1741320130584-407b415cac6a" 
+            alt="Hikers enjoying a mountain view in Vietnam"
+            class="rounded-lg shadow-xl"
+          />
+          <img 
+            src="https://images.unsplash.com/photo-1503300806790-80dde376911e" 
+            alt="Rock climbing in Vietnam"
+            class="absolute -bottom-8 -left-8 w-2/3 rounded-lg shadow-xl hidden md:block"
+          />
         </div>
       </div>
     </div>
   </section>
   
-  <section class="py-16 bg-cream">
-    <div class="container mx-auto px-4 text-center">
-      <h2 class="text-3xl font-bold text-forest mb-6 font-inter">Ready for Adventure?</h2>
-      <p class="text-charcoal mb-10 max-w-2xl mx-auto">Explore our comprehensive guides, find your perfect activity, and start planning your outdoor adventure in Vietnam today.</p>
+  <!-- Featured Adventures -->
+  <section class="py-16 bg-background">
+    <div class="container-custom">
+      <h2 class="text-3xl md:text-4xl font-inter font-bold mb-4 text-center">Popular Adventures</h2>
+      <p class="text-lg text-text/80 max-w-3xl mx-auto text-center mb-12">
+        Join other outdoor enthusiasts on these highly-rated adventures
+      </p>
       
-      <div class="flex flex-wrap justify-center gap-4">
-        <a href="/activities" class="bg-forest text-white px-6 py-3 rounded-lg hover:bg-forest/90 transition-colors font-medium">
-          Browse Activities
-        </a>
-        <a href="/contact" class="bg-white text-forest border border-forest px-6 py-3 rounded-lg hover:bg-gray-50 transition-colors font-medium">
-          Contact Us
-        </a>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {featuredAdventures.map(adventure => (
+          <AdventureCard
+            title={adventure.title}
+            location={adventure.location}
+            difficulty={adventure.difficulty}
+            duration={adventure.duration}
+            image={adventure.image}
+            link={adventure.link}
+            featured={adventure.featured}
+          />
+        ))}
+      </div>
+      
+      <div class="text-center mt-12">
+        <a href="/adventures" class="btn btn-primary">View All Adventures</a>
       </div>
     </div>
   </section>
-</BaseLayout>
+  
+  <!-- Testimonials -->
+  <section class="py-16 bg-white">
+    <div class="container-custom">
+      <h2 class="text-3xl md:text-4xl font-inter font-bold mb-4 text-center">Adventure Stories</h2>
+      <p class="text-lg text-text/80 max-w-3xl mx-auto text-center mb-12">
+        Hear what fellow outdoor enthusiasts have to say about their Vietnamese adventures
+      </p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {testimonials.map(testimonial => (
+          <div class="bg-background p-6 rounded-lg">
+            <svg class="h-8 w-8 text-secondary mb-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+            </svg>
+            <p class="text-text/90 mb-4 italic">{testimonial.text}</p>
+            <div class="flex items-center">
+              <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center">
+                {testimonial.name.charAt(0)}
+              </div>
+              <div class="ml-3">
+                <p class="font-inter font-semibold">{testimonial.name}</p>
+                <p class="text-sm text-text/70">{testimonial.location}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- CTA Section -->
+  <section class="py-20 bg-primary text-white">
+    <div class="container-custom text-center">
+      <h2 class="text-3xl md:text-4xl font-inter font-bold mb-4">Ready for Your Next Adventure?</h2>
+      <p class="text-xl text-white/80 max-w-3xl mx-auto mb-8">
+        Vietnam's incredible landscapes are waiting to be explored. Find your perfect outdoor activity today.
+      </p>
+      
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/adventures" class="btn bg-white text-primary hover:bg-white/90">Browse Adventures</a>
+        <a href="/contact" class="btn border-2 border-white text-white hover:bg-white hover:text-primary">Contact Us</a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Newsletter -->
+  <Newsletter />
+</Layout>

@@ -1,0 +1,481 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import HeroSection from '../../components/HeroSection.astro';
+import AdventureCard from '../../components/AdventureCard.astro';
+import FilterBar from '../../components/FilterBar.astro';
+import Newsletter from '../../components/Newsletter.astro';
+import FeatureCard from '../../components/FeatureCard.astro';
+
+// Adventure categories
+const categories = [
+  {
+    title: "Guided Treks",
+    description: "Multi-day adventures with expert guides",
+    image: "https://images.unsplash.com/photo-1502747812021-0ae746b6c23f",
+    link: "#guided-treks",
+    tagline: "Popular"
+  },
+  {
+    title: "Kayaking & Water Sports",
+    description: "Paddle through Vietnam's stunning waterways",
+    image: "https://images.unsplash.com/photo-1523065144972-e5f5c9ea6ed9",
+    link: "#water-adventures",
+    tagline: "Exciting"
+  },
+  {
+    title: "Caving Expeditions",
+    description: "Explore hidden underground worlds",
+    image: "https://images.unsplash.com/photo-1503300806790-80dde376911e",
+    link: "#caving",
+    tagline: "Thrilling"
+  },
+  {
+    title: "Cultural Adventures",
+    description: "Connect with local communities and traditions",
+    image: "https://images.unsplash.com/photo-1598430772299-8412a84ea34f",
+    link: "#cultural",
+    tagline: "Authentic"
+  }
+];
+
+// Adventure data
+const adventures = [
+  // Guided Treks
+  {
+    title: "Sapa Valley Discovery",
+    location: "Lao Cai Province",
+    difficulty: "Moderate",
+    duration: "3 Days",
+    image: "https://images.unsplash.com/photo-1528127269322-539801943592",
+    link: "/trail-running/sapa-trails",
+    featured: true,
+    category: "guided-treks"
+  },
+  {
+    title: "Ha Giang Cultural Trek",
+    location: "Ha Giang Province",
+    difficulty: "Moderate",
+    duration: "4 Days",
+    image: "https://images.unsplash.com/photo-1678099006439-dba9e4d3f9f5",
+    link: "/hiking/ha-giang-loop",
+    featured: false,
+    category: "guided-treks"
+  },
+  {
+    title: "Fansipan Summit Challenge",
+    location: "Lao Cai Province",
+    difficulty: "Challenging",
+    duration: "2 Days",
+    image: "https://images.unsplash.com/photo-1502747812021-0ae746b6c23f",
+    link: "/hiking/fansipan",
+    featured: false,
+    category: "guided-treks"
+  },
+
+  // Water Adventures
+  {
+    title: "Ha Long Bay Kayaking",
+    location: "Quang Ninh Province",
+    difficulty: "Easy",
+    duration: "1 Day",
+    image: "https://images.unsplash.com/photo-1523065144972-e5f5c9ea6ed9",
+    link: "/adventures/halong-bay-kayaking",
+    featured: false,
+    category: "water-adventures"
+  },
+  {
+    title: "Mekong Delta Exploration",
+    location: "Mekong Delta",
+    difficulty: "Easy",
+    duration: "2 Days",
+    image: "https://images.unsplash.com/photo-1741320130676-807cbb3fcf8e",
+    link: "/adventures/mekong-delta",
+    featured: false,
+    category: "water-adventures"
+  },
+
+  // Caving
+  {
+    title: "Phong Nha Cave System",
+    location: "Quang Binh Province",
+    difficulty: "Challenging",
+    duration: "3 Days",
+    image: "https://images.unsplash.com/photo-1503300806790-80dde376911e",
+    link: "/adventures/phong-nha-caving",
+    featured: true,
+    category: "caving"
+  },
+  {
+    title: "Tu Lan Cave Experience",
+    location: "Quang Binh Province",
+    difficulty: "Difficult",
+    duration: "2 Days",
+    image: "https://images.unsplash.com/photo-1741320130584-407b415cac6a",
+    link: "/adventures/tu-lan-caves",
+    featured: false,
+    category: "caving"
+  },
+
+  // Cultural
+  {
+    title: "Northern Hill Tribe Homestay",
+    location: "Lao Cai Province",
+    difficulty: "Easy",
+    duration: "2 Days",
+    image: "https://images.unsplash.com/photo-1517475020140-cd7f966b0523",
+    link: "/adventures/hill-tribe-homestay",
+    featured: false,
+    category: "cultural"
+  },
+  {
+    title: "Central Highlands Culture",
+    location: "Kon Tum Province",
+    difficulty: "Moderate",
+    duration: "3 Days",
+    image: "https://images.unsplash.com/photo-1598430772299-8412a84ea34f",
+    link: "/adventures/central-highlands",
+    featured: false,
+    category: "cultural"
+  }
+];
+
+// Filter options specifically for adventures
+const durations = [
+  { value: 'day-trip', label: 'Day Trip' },
+  { value: '2-3-days', label: '2-3 Days' },
+  { value: '4-plus-days', label: '4+ Days' },
+];
+
+const regions = [
+  { value: 'north', label: 'North Vietnam' },
+  { value: 'central', label: 'Central Vietnam' },
+  { value: 'south', label: 'South Vietnam' },
+  { value: 'highlands', label: 'Central Highlands' },
+  { value: 'coastal', label: 'Coastal Areas' },
+];
+
+// Adventure-specific activities
+const adventureTypes = [
+  { value: 'guided-treks', label: 'Guided Treks' },
+  { value: 'water-adventures', label: 'Kayaking & Water Sports' },
+  { value: 'caving', label: 'Caving' },
+  { value: 'cultural', label: 'Cultural Adventures' },
+  { value: 'multi-activity', label: 'Multi-Activity' },
+];
+---
+
+<Layout 
+  title="Curated Adventure Experiences" 
+  description="Discover Vietnam's most exciting adventure experiences, from kayaking in Ha Long Bay to exploring the world's largest caves."
+  image="https://images.unsplash.com/photo-1523065144972-e5f5c9ea6ed9"
+>
+  <!-- Hero Section -->
+  <HeroSection
+    title="Adventure Experiences in Vietnam"
+    subtitle="From caving in the world's largest caverns to kayaking among limestone karsts, discover guided adventures that showcase Vietnam's natural wonders"
+    backgroundImage="https://images.unsplash.com/photo-1523065144972-e5f5c9ea6ed9"
+    buttonText="Explore Adventures"
+    buttonLink="#adventure-categories"
+  />
+  
+  <!-- Introduction -->
+  <section class="py-12 bg-white">
+    <div class="container-custom">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-inter font-bold mb-6">Extraordinary Adventures Await</h2>
+        <p class="text-lg text-text/80 mb-4">
+          Beyond self-guided hiking and climbing, Vietnam offers a wealth of curated adventure experiences led by experts who know the terrain intimately.
+        </p>
+        <p class="text-lg text-text/80">
+          Our adventure guides connect you with reliable local operators and highlight Vietnam's most extraordinary outdoor experiences, from navigating underground rivers to cultural immersion with hill tribes.
+        </p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Adventure Categories -->
+  <section id="adventure-categories" class="py-16 bg-background">
+    <div class="container-custom">
+      <h2 class="text-3xl font-inter font-bold mb-8 text-center">Adventure Categories</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {categories.map(category => (
+          <FeatureCard
+            title={category.title}
+            description={category.description}
+            image={category.image}
+            link={category.link}
+            tagline={category.tagline}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Filter Section -->
+  <section id="find-adventures" class="py-12 bg-white">
+    <div class="container-custom">
+      <h2 class="text-3xl font-inter font-bold mb-8">Find Your Perfect Adventure</h2>
+      
+      <FilterBar 
+        difficulties={[
+          { value: 'easy', label: 'Easy' },
+          { value: 'moderate', label: 'Moderate' },
+          { value: 'difficult', label: 'Difficult' },
+          { value: 'challenging', label: 'Challenging' },
+        ]}
+        durations={durations}
+        regions={regions}
+        activities={adventureTypes}
+      />
+      
+      <!-- Adventure Listings by Category -->
+      <div class="space-y-16 mt-12">
+        <!-- Guided Treks -->
+        <div id="guided-treks">
+          <h3 class="text-2xl font-inter font-bold mb-6">Guided Treks</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {adventures
+              .filter(adv => adv.category === 'guided-treks')
+              .map(adventure => (
+                <AdventureCard
+                  title={adventure.title}
+                  location={adventure.location}
+                  difficulty={adventure.difficulty}
+                  duration={adventure.duration}
+                  image={adventure.image}
+                  link={adventure.link}
+                  featured={adventure.featured}
+                />
+              ))
+            }
+          </div>
+        </div>
+        
+        <!-- Water Adventures -->
+        <div id="water-adventures">
+          <h3 class="text-2xl font-inter font-bold mb-6">Kayaking & Water Sports</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {adventures
+              .filter(adv => adv.category === 'water-adventures')
+              .map(adventure => (
+                <AdventureCard
+                  title={adventure.title}
+                  location={adventure.location}
+                  difficulty={adventure.difficulty}
+                  duration={adventure.duration}
+                  image={adventure.image}
+                  link={adventure.link}
+                  featured={adventure.featured}
+                />
+              ))
+            }
+          </div>
+        </div>
+        
+        <!-- Caving -->
+        <div id="caving">
+          <h3 class="text-2xl font-inter font-bold mb-6">Caving Expeditions</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {adventures
+              .filter(adv => adv.category === 'caving')
+              .map(adventure => (
+                <AdventureCard
+                  title={adventure.title}
+                  location={adventure.location}
+                  difficulty={adventure.difficulty}
+                  duration={adventure.duration}
+                  image={adventure.image}
+                  link={adventure.link}
+                  featured={adventure.featured}
+                />
+              ))
+            }
+          </div>
+        </div>
+        
+        <!-- Cultural -->
+        <div id="cultural">
+          <h3 class="text-2xl font-inter font-bold mb-6">Cultural Adventures</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {adventures
+              .filter(adv => adv.category === 'cultural')
+              .map(adventure => (
+                <AdventureCard
+                  title={adventure.title}
+                  location={adventure.location}
+                  difficulty={adventure.difficulty}
+                  duration={adventure.duration}
+                  image={adventure.image}
+                  link={adventure.link}
+                  featured={adventure.featured}
+                />
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Adventure Planning Tips -->
+  <section class="py-16 bg-background">
+    <div class="container-custom">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="relative">
+          <img 
+            src="https://images.unsplash.com/photo-1741320130708-7a91adf5fc4e" 
+            alt="Vietnam adventure planning"
+            class="rounded-lg shadow-xl object-cover h-[500px] w-full"
+          />
+          <div class="absolute -bottom-6 -right-6 bg-white p-4 rounded-lg shadow-lg max-w-xs hidden md:block">
+            <p class="font-inter font-semibold mb-1">Booking Tips</p>
+            <p class="text-sm text-text/80">
+              Most adventure experiences should be booked 2-4 weeks in advance. 
+              For premium experiences like Phong Nha expeditions, reserve 2-3 months ahead.
+            </p>
+          </div>
+        </div>
+        
+        <div>
+          <h2 class="text-3xl font-inter font-bold mb-6">Planning Your Adventure</h2>
+          
+          <div class="space-y-6">
+            <div class="flex">
+              <div class="flex-shrink-0 mr-4">
+                <div class="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <h3 class="font-inter text-xl font-semibold mb-2">Timing Your Adventure</h3>
+                <p class="text-text/80">Most guided adventures in Vietnam run year-round, but consider the regional climate patterns. October to April is generally best for most parts of the country, avoiding the intense summer heat and monsoon season.</p>
+              </div>
+            </div>
+            
+            <div class="flex">
+              <div class="flex-shrink-0 mr-4">
+                <div class="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <h3 class="font-inter text-xl font-semibold mb-2">Choose Reputable Operators</h3>
+                <p class="text-text/80">The guides we feature have been vetted for safety standards, environmental practices, and overall quality of experience. We prioritize operators who employ local guides and contribute to local communities.</p>
+              </div>
+            </div>
+            
+            <div class="flex">
+              <div class="flex-shrink-0 mr-4">
+                <div class="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <h3 class="font-inter text-xl font-semibold mb-2">Preparing Physically</h3>
+                <p class="text-text/80">Most adventures require at least a moderate level of fitness. Begin a training regimen several weeks before your trip, focusing on the specific demands of your adventure (cardio for trekking, upper body for kayaking, etc.).</p>
+              </div>
+            </div>
+            
+            <div class="flex">
+              <div class="flex-shrink-0 mr-4">
+                <div class="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <h3 class="font-inter text-xl font-semibold mb-2">Insurance & Safety</h3>
+                <p class="text-text/80">Purchase comprehensive travel insurance that covers adventure activities and emergency evacuation. For more remote expeditions, consider satellite communication devices for emergency contact.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Testimonials -->
+  <section class="py-16 bg-white">
+    <div class="container-custom">
+      <h2 class="text-3xl font-inter font-bold mb-8 text-center">Adventure Stories</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-background p-6 rounded-lg">
+          <svg class="h-8 w-8 text-secondary mb-4" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+          </svg>
+          <p class="text-text/90 mb-4 italic">"The Son Doong Cave expedition was life-changing. The vastness of the chambers, the underground river, and the forest growing inside the cave are unlike anything I've ever experienced. The guides were knowledgeable and safety-conscious."</p>
+          <div class="flex items-center">
+            <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center">
+              M
+            </div>
+            <div class="ml-3">
+              <p class="font-inter font-semibold">Michael T.</p>
+              <p class="text-sm text-text/70">Canada</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-background p-6 rounded-lg">
+          <svg class="h-8 w-8 text-secondary mb-4" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+          </svg>
+          <p class="text-text/90 mb-4 italic">"Kayaking in Ha Long Bay at sunrise was magical. The water was like glass, reflecting the limestone karsts. Our guide took us to hidden lagoons away from the tourist crowds. Worth every penny!"</p>
+          <div class="flex items-center">
+            <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center">
+              S
+            </div>
+            <div class="ml-3">
+              <p class="font-inter font-semibold">Sophie K.</p>
+              <p class="text-sm text-text/70">Australia</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-background p-6 rounded-lg">
+          <svg class="h-8 w-8 text-secondary mb-4" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+          </svg>
+          <p class="text-text/90 mb-4 italic">"The homestay experience with the H'mong family in Sapa was the highlight of our Vietnam trip. We helped in the rice fields, learned to cook traditional dishes, and were welcomed like family. An authentic cultural exchange that feels increasingly rare in today's world."</p>
+          <div class="flex items-center">
+            <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center">
+              R
+            </div>
+            <div class="ml-3">
+              <p class="font-inter font-semibold">Rachel L.</p>
+              <p class="text-sm text-text/70">United States</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Call to Action -->
+  <section class="py-16 bg-primary text-white">
+    <div class="container-custom text-center">
+      <h2 class="text-3xl md:text-4xl font-inter font-bold mb-6">Ready for Your Vietnamese Adventure?</h2>
+      <p class="text-xl text-white/80 max-w-3xl mx-auto mb-8">
+        From the depths of mysterious caves to the heights of misty mountains, Vietnam's adventures await.
+      </p>
+      
+      <a href="#find-adventures" class="btn bg-white text-primary hover:bg-white/90">
+        Find Your Adventure
+      </a>
+    </div>
+  </section>
+  
+  <!-- Newsletter -->
+  <Newsletter 
+    title="Get Adventure Updates"
+    description="Subscribe for seasonal suggestions, special adventure offerings, and exclusive deals from our trusted operators."
+  />
+</Layout>

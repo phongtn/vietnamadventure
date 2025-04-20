@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Sans+Pro:wght@300;400;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 16px;
+    color: #2F2F2F;
+    background-color: #F4F1DE;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl mb-6;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl mb-4;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl mb-3;
+  }
+
+  p {
+    @apply mb-4 leading-relaxed;
+  }
+
+  a {
+    @apply text-primary hover:text-secondary transition duration-300;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-6 py-3 font-inter font-medium rounded-md transition duration-300;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-white hover:bg-primary/90;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-white hover:bg-secondary/90;
+  }
+
+  .btn-outline {
+    @apply border-2 border-primary text-primary hover:bg-primary hover:text-white;
+  }
+
+  .card {
+    @apply bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300;
+  }
+
+  .container-custom {
+    @apply container mx-auto px-4 md:px-6;
+  }
+}

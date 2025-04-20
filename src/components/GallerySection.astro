@@ -1,0 +1,61 @@
+---
+export interface Props {
+  title?: string;
+  images: string[];
+}
+
+const { title = "Image Gallery", images } = Astro.props;
+---
+
+<section class="py-12 bg-white">
+  {title && (
+    <h2 class="text-2xl font-inter font-semibold mb-8">{title}</h2>
+  )}
+  
+  <div 
+    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+    x-data="{ activeImage: null }"
+  >
+    {images.map((image, index) => (
+      <div 
+        class="overflow-hidden rounded-lg cursor-pointer aspect-video"
+        x-on:click={`activeImage = '${image}'`}
+      >
+        <img 
+          src={image} 
+          alt={`Gallery image ${index + 1}`}
+          class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+          loading="lazy"
+        />
+      </div>
+    ))}
+    
+    <!-- Lightbox -->
+    <div 
+      x-show="activeImage"
+      x-on:click="activeImage = null"
+      x-cloak
+      class="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4"
+    >
+      <button 
+        x-on:click.stop="activeImage = null"
+        class="absolute top-4 right-4 text-white"
+        aria-label="Close lightbox"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+      
+      <img 
+        x-bind:src="activeImage"
+        class="max-w-full max-h-[90vh] object-contain"
+        alt="Enlarged gallery image"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  [x-cloak] { display: none !important; }
+</style>

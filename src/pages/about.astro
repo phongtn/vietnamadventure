@@ -1,0 +1,210 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Newsletter from '../components/Newsletter.astro';
+
+const teamMembers = [
+  {
+    name: "Linh Nguyen",
+    role: "Founder & Trail Running Expert",
+    bio: "Born in Hanoi and raised near Sapa, Linh combines her love for mountain trails with deep local knowledge. She has completed ultra-marathons across Vietnam and Southeast Asia.",
+    imagePlaceholder: "LN"
+  },
+  {
+    name: "Thomas Wilson",
+    role: "Rock Climbing Director",
+    bio: "With over 15 years of climbing experience across four continents, Thomas fell in love with Vietnam's limestone karsts in 2015 and never left. He has established numerous routes throughout the country.",
+    imagePlaceholder: "TW"
+  },
+  {
+    name: "Mai Tran",
+    role: "Hiking & Cultural Expert",
+    bio: "An anthropologist by training and adventurer by heart, Mai specializes in treks that combine natural beauty with cultural immersion in Vietnam's diverse ethnic communities.",
+    imagePlaceholder: "MT"
+  },
+  {
+    name: "David Phan",
+    role: "Adventure Photographer",
+    bio: "Half-Vietnamese, half-American, David captures the stunning landscapes and cultural richness of Vietnam through his lens, with work featured in National Geographic and outdoor publications.",
+    imagePlaceholder: "DP"
+  }
+];
+
+const partners = [
+  "Vietnam National Parks Association",
+  "Responsible Tourism Vietnam",
+  "Vietnamese Mountaineering Association",
+  "Hanoi Trail Running Club",
+  "Sapa Tour Guide Collective",
+  "Cat Ba Climbing Community",
+  "Vietnam Conservation Network"
+];
+---
+
+<Layout 
+  title="About Us" 
+  description="Learn about the team behind VietnamADV and our mission to share Vietnam's outdoor adventures with the world."
+  image="https://images.unsplash.com/photo-1523065144972-e5f5c9ea6ed9"
+>
+  <!-- Hero Section -->
+  <div class="relative">
+    <div class="h-[40vh] min-h-[300px] w-full relative">
+      <img 
+        src="https://images.unsplash.com/photo-1523065144972-e5f5c9ea6ed9" 
+        alt="Vietnam adventure landscape"
+        class="absolute inset-0 w-full h-full object-cover"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+      <div class="absolute bottom-0 w-full p-6 md:p-12">
+        <div class="container-custom">
+          <h1 class="text-white mb-2">About VietnamADV</h1>
+          <p class="text-white/90 text-lg max-w-2xl">Connecting adventurers with Vietnam's stunning natural landscapes since 2018</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Our Story -->
+  <section class="py-16 bg-white">
+    <div class="container-custom">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-inter font-bold mb-6">Our Story</h2>
+          <p class="text-lg mb-4">
+            VietnamADV began with a simple mission: to showcase Vietnam's incredible outdoor adventure possibilities to the world. 
+          </p>
+          <p class="mb-4">
+            Founded in 2018 by a small team of local and international outdoor enthusiasts, we were frustrated by the lack of reliable, detailed information about Vietnam's trails, climbing spots, and adventure activities.
+          </p>
+          <p class="mb-4">
+            What started as a passion project documenting our favorite routes has grown into Vietnam's most comprehensive outdoor adventure platform. We combine deep local knowledge with international outdoor experience to create guides that help you discover Vietnam's wild side.
+          </p>
+          <p>
+            We believe in responsible adventure - protecting Vietnam's natural environments while supporting local communities through sustainable tourism practices.
+          </p>
+        </div>
+        
+        <div class="relative">
+          <img 
+            src="https://images.unsplash.com/photo-1598430772299-8412a84ea34f" 
+            alt="Team hiking in Vietnam"
+            class="rounded-lg shadow-xl"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Our Mission -->
+  <section class="py-16 bg-background">
+    <div class="container-custom text-center">
+      <h2 class="text-3xl md:text-4xl font-inter font-bold mb-6">Our Mission</h2>
+      <p class="text-xl max-w-3xl mx-auto mb-12">
+        To inspire and enable outdoor enthusiasts to experience Vietnam's extraordinary natural beauty through responsible adventure.
+      </p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white p-8 rounded-lg shadow-md">
+          <div class="bg-primary/10 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-inter font-semibold mb-3">Authentic Information</h3>
+          <p class="text-text/80">
+            Provide accurate, detailed, and up-to-date information on Vietnam's outdoor adventures based on firsthand experience.
+          </p>
+        </div>
+        
+        <div class="bg-white p-8 rounded-lg shadow-md">
+          <div class="bg-primary/10 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-inter font-semibold mb-3">Sustainable Adventure</h3>
+          <p class="text-text/80">
+            Promote responsible tourism practices that preserve Vietnam's natural environments and support local communities.
+          </p>
+        </div>
+        
+        <div class="bg-white p-8 rounded-lg shadow-md">
+          <div class="bg-primary/10 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-inter font-semibold mb-3">Community Building</h3>
+          <p class="text-text/80">
+            Foster connections between adventure enthusiasts and local guides, creating a community that shares a passion for Vietnam's outdoors.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Our Team -->
+  <section class="py-16 bg-white">
+    <div class="container-custom">
+      <h2 class="text-3xl md:text-4xl font-inter font-bold mb-6 text-center">Meet Our Team</h2>
+      <p class="text-lg text-text/80 max-w-3xl mx-auto text-center mb-12">
+        Our diverse team combines local expertise with international experience to create the best adventure guides for Vietnam
+      </p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {teamMembers.map(member => (
+          <div class="bg-background rounded-lg overflow-hidden">
+            <div class="bg-primary h-40 flex items-center justify-center">
+              <span class="text-white text-4xl font-bold">{member.imagePlaceholder}</span>
+            </div>
+            <div class="p-6">
+              <h3 class="font-inter font-semibold text-xl mb-1">{member.name}</h3>
+              <p class="text-primary font-medium mb-3">{member.role}</p>
+              <p class="text-text/80">{member.bio}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Partners -->
+  <section class="py-16 bg-background">
+    <div class="container-custom text-center">
+      <h2 class="text-3xl md:text-4xl font-inter font-bold mb-6">Our Partners</h2>
+      <p class="text-lg text-text/80 max-w-3xl mx-auto mb-12">
+        We collaborate with these organizations to promote responsible adventure in Vietnam
+      </p>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {partners.map(partner => (
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <div class="bg-primary/10 w-12 h-12 mx-auto rounded-full flex items-center justify-center mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+            </div>
+            <p class="font-inter font-medium">{partner}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- CTA Section -->
+  <section class="py-16 bg-primary text-white">
+    <div class="container-custom text-center">
+      <h2 class="text-3xl md:text-4xl font-inter font-bold mb-6">Join Our Adventure Community</h2>
+      <p class="text-xl text-white/80 max-w-3xl mx-auto mb-8">
+        Connect with fellow outdoor enthusiasts, share your experiences, and discover new adventures in Vietnam
+      </p>
+      
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/contact" class="btn bg-white text-primary hover:bg-white/90">Contact Us</a>
+        <a href="/adventures" class="btn border-2 border-white text-white hover:bg-white hover:text-primary">Explore Adventures</a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Newsletter -->
+  <Newsletter />
+</Layout>

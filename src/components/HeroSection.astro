@@ -1,0 +1,43 @@
+---
+export interface Props {
+  title: string;
+  subtitle: string;
+  backgroundImage: string;
+  buttonText?: string;
+  buttonLink?: string;
+  overlay?: boolean;
+}
+
+const {
+  title,
+  subtitle,
+  backgroundImage,
+  buttonText = "Discover Adventures",
+  buttonLink = "/adventures",
+  overlay = true
+} = Astro.props;
+---
+
+<section class="relative h-[80vh] min-h-[600px] flex items-center">
+  <!-- Background Image -->
+  <div class="absolute inset-0 w-full h-full overflow-hidden">
+    <img 
+      src={backgroundImage} 
+      alt={title}
+      class="w-full h-full object-cover"
+    />
+    {overlay && <div class="absolute inset-0 bg-black/40"></div>}
+  </div>
+  
+  <!-- Content -->
+  <div class="container-custom relative z-10 text-white">
+    <div class="max-w-3xl">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-inter font-bold mb-4">{title}</h1>
+      <p class="text-xl md:text-2xl mb-8">{subtitle}</p>
+      
+      {buttonText && buttonLink && (
+        <a href={buttonLink} class="btn btn-secondary">{buttonText}</a>
+      )}
+    </div>
+  </div>
+</section>

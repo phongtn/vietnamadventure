@@ -1,0 +1,125 @@
+---
+export interface FilterOption {
+  value: string;
+  label: string;
+}
+
+export interface Props {
+  difficulties?: FilterOption[];
+  durations?: FilterOption[];
+  regions?: FilterOption[];
+  activities?: FilterOption[];
+}
+
+const { 
+  difficulties = [
+    { value: 'easy', label: 'Easy' },
+    { value: 'moderate', label: 'Moderate' },
+    { value: 'difficult', label: 'Difficult' },
+    { value: 'challenging', label: 'Challenging' },
+  ],
+  durations = [
+    { value: 'half-day', label: 'Half Day' },
+    { value: 'full-day', label: 'Full Day' },
+    { value: 'multi-day', label: 'Multi-Day' },
+    { value: 'week-plus', label: 'Week+' },
+  ],
+  regions = [
+    { value: 'north', label: 'North Vietnam' },
+    { value: 'central', label: 'Central Vietnam' },
+    { value: 'south', label: 'South Vietnam' },
+    { value: 'highlands', label: 'Central Highlands' },
+  ],
+  activities = [
+    { value: 'trail-running', label: 'Trail Running' },
+    { value: 'hiking', label: 'Hiking' },
+    { value: 'climbing', label: 'Climbing' },
+    { value: 'kayaking', label: 'Kayaking' },
+    { value: 'caving', label: 'Caving' },
+  ]
+} = Astro.props;
+---
+
+<div class="bg-white rounded-lg shadow-md p-4 md:p-6 mb-8" x-data="{ filtersOpen: false }">
+  <div class="md:flex md:items-center md:justify-between">
+    <h2 class="text-xl font-inter font-semibold mb-4 md:mb-0">Find Your Adventure</h2>
+    
+    <button 
+      class="flex items-center text-primary font-medium md:hidden"
+      x-on:click="filtersOpen = !filtersOpen"
+    >
+      <span x-text="filtersOpen ? 'Hide Filters' : 'Show Filters'">Show Filters</span>
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        class="h-5 w-5 ml-1 transition-transform duration-300"
+        x-bind:class="filtersOpen ? 'rotate-180' : ''"
+        fill="none" 
+        viewBox="0 0 24 24" 
+        stroke="currentColor"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    </button>
+  </div>
+  
+  <div 
+    class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-4"
+    x-bind:class="filtersOpen || window.innerWidth >= 768 ? 'block' : 'hidden'"
+  >
+    <!-- Difficulty -->
+    <div>
+      <label for="difficulty" class="block text-sm font-medium text-text/70 mb-2">Difficulty</label>
+      <select id="difficulty" name="difficulty" class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-primary focus:border-primary">
+        <option value="">Any Difficulty</option>
+        {difficulties.map(option => (
+          <option value={option.value}>{option.label}</option>
+        ))}
+      </select>
+    </div>
+    
+    <!-- Duration -->
+    <div>
+      <label for="duration" class="block text-sm font-medium text-text/70 mb-2">Duration</label>
+      <select id="duration" name="duration" class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-primary focus:border-primary">
+        <option value="">Any Duration</option>
+        {durations.map(option => (
+          <option value={option.value}>{option.label}</option>
+        ))}
+      </select>
+    </div>
+    
+    <!-- Region -->
+    <div>
+      <label for="region" class="block text-sm font-medium text-text/70 mb-2">Region</label>
+      <select id="region" name="region" class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-primary focus:border-primary">
+        <option value="">Any Region</option>
+        {regions.map(option => (
+          <option value={option.value}>{option.label}</option>
+        ))}
+      </select>
+    </div>
+    
+    <!-- Activity -->
+    <div>
+      <label for="activity" class="block text-sm font-medium text-text/70 mb-2">Activity</label>
+      <select id="activity" name="activity" class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-primary focus:border-primary">
+        <option value="">Any Activity</option>
+        {activities.map(option => (
+          <option value={option.value}>{option.label}</option>
+        ))}
+      </select>
+    </div>
+  </div>
+  
+  <div 
+    class="mt-6 flex justify-center"
+    x-bind:class="filtersOpen || window.innerWidth >= 768 ? 'block' : 'hidden'"
+  >
+    <button type="submit" class="btn btn-primary">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+      Search Adventures
+    </button>
+  </div>
+</div>

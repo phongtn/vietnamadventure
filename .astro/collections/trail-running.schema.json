@@ -1,0 +1,77 @@
+{
+  "$ref": "#/definitions/trail-running",
+  "definitions": {
+    "trail-running": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "coverImage": {
+          "type": "string"
+        },
+        "difficulty": {
+          "type": "string"
+        },
+        "duration": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "elevation": {
+          "type": "string"
+        },
+        "bestSeason": {
+          "type": "string"
+        },
+        "galleryImages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "coordinates": {
+          "type": "object",
+          "properties": {
+            "lat": {
+              "type": "number"
+            },
+            "lng": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "lat",
+            "lng"
+          ],
+          "additionalProperties": false
+        },
+        "type": {
+          "type": "string"
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "description",
+        "coverImage",
+        "difficulty",
+        "duration",
+        "location",
+        "elevation",
+        "bestSeason",
+        "galleryImages",
+        "coordinates",
+        "type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}
