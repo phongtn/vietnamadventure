@@ -2,65 +2,72 @@
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="bg-forest text-white pt-12 pb-6">
+<footer class="bg-forest text-white py-12 mt-auto">
   <div class="container mx-auto px-4">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-      <div>
-        <h3 class="text-xl font-semibold mb-4 font-inter">VietnamADV</h3>
-        <p class="mb-4">Discover the best outdoor adventures in Vietnam, from trail running and hiking to rock climbing and more.</p>
-        <div class="flex space-x-4">
-          <a href="#" class="text-white hover:text-sunset" aria-label="Facebook">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-            </svg>
-          </a>
-          <a href="#" class="text-white hover:text-sunset" aria-label="Instagram">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-            </svg>
-          </a>
-          <a href="#" class="text-white hover:text-sunset" aria-label="Twitter">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
-            </svg>
-          </a>
-        </div>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <!-- Logo and Tagline -->
+      <div class="md:col-span-1">
+        <a href="/" class="text-xl font-bold font-inter flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 128 128" fill="none">
+            <path d="M64 16L16 112H112L64 16Z" fill="#F4F1DE"/>
+            <path d="M64 48L40 96H88L64 48Z" fill="#1B998B"/>
+            <path d="M64 64L52 88H76L64 64Z" fill="#FF6B35"/>
+          </svg>
+          VietnamADV
+        </a>
+        <p class="mt-3 text-sm">Discover Vietnam's incredible outdoor adventures with VietnamADV - your guide to trail running, hiking, climbing, and more nature activities across Vietnam.</p>
       </div>
       
+      <!-- Quick Links -->
       <div>
-        <h3 class="text-xl font-semibold mb-4 font-inter">Activities</h3>
+        <h3 class="text-lg font-semibold mb-4 font-inter">Adventure Guides</h3>
         <ul class="space-y-2">
-          <li><a href="/activities/trail-running" class="hover:text-sunset transition-colors">Trail Running</a></li>
-          <li><a href="/activities/hiking" class="hover:text-sunset transition-colors">Hiking</a></li>
-          <li><a href="/activities/climbing" class="hover:text-sunset transition-colors">Rock Climbing</a></li>
-          <li><a href="/activities" class="hover:text-sunset transition-colors">All Activities</a></li>
+          <li><a href="/guides/trail-running" class="hover:text-orange transition">Trail Running</a></li>
+          <li><a href="/guides/hiking" class="hover:text-orange transition">Hiking</a></li>
+          <li><a href="/guides/climbing" class="hover:text-orange transition">Climbing</a></li>
         </ul>
       </div>
       
+      <!-- Experiences -->
       <div>
-        <h3 class="text-xl font-semibold mb-4 font-inter">Experiences</h3>
+        <h3 class="text-lg font-semibold mb-4 font-inter">Experiences</h3>
         <ul class="space-y-2">
-          <li><a href="/experiences/caving" class="hover:text-sunset transition-colors">Caving</a></li>
-          <li><a href="/experiences/kayaking" class="hover:text-sunset transition-colors">Kayaking</a></li>
-          <li><a href="/experiences" class="hover:text-sunset transition-colors">All Experiences</a></li>
+          <li><a href="/experiences/caving" class="hover:text-orange transition">Caving</a></li>
+          <li><a href="/experiences/kayaking" class="hover:text-orange transition">Kayaking</a></li>
+          <li><a href="/experiences" class="hover:text-orange transition">All Experiences</a></li>
         </ul>
       </div>
       
+      <!-- Company -->
       <div>
-        <h3 class="text-xl font-semibold mb-4 font-inter">Information</h3>
+        <h3 class="text-lg font-semibold mb-4 font-inter">Company</h3>
         <ul class="space-y-2">
-          <li><a href="/about" class="hover:text-sunset transition-colors">About Us</a></li>
-          <li><a href="/contact" class="hover:text-sunset transition-colors">Contact</a></li>
-          <li><a href="#" class="hover:text-sunset transition-colors">Privacy Policy</a></li>
-          <li><a href="#" class="hover:text-sunset transition-colors">Terms of Service</a></li>
+          <li><a href="/about" class="hover:text-orange transition">About Us</a></li>
+          <li><a href="/contact" class="hover:text-orange transition">Contact</a></li>
+          <li><a href="/privacy" class="hover:text-orange transition">Privacy Policy</a></li>
         </ul>
       </div>
     </div>
     
-    <div class="border-t border-gray-600 pt-6">
-      <p class="text-center text-sm">© {currentYear} VietnamADV. All rights reserved.</p>
+    <div class="border-t border-lake/30 mt-8 pt-8 text-sm text-white/70 flex flex-col md:flex-row justify-between items-center">
+      <p>&copy; {currentYear} VietnamADV. All rights reserved.</p>
+      <div class="flex space-x-4 mt-4 md:mt-0">
+        <a href="https://instagram.com" class="hover:text-orange transition" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-15c-3.866 0-7 3.134-7 7s3.134 7 7 7 7-3.134 7-7-3.134-7-7-7zm0 11c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm0-6c-1.105 0-2 .895-2 2s.895 2 2 2 2-.895 2-2-.895-2-2-2z"/>
+          </svg>
+        </a>
+        <a href="https://facebook.com" class="hover:text-orange transition" aria-label="Facebook">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z"/>
+          </svg>
+        </a>
+        <a href="https://twitter.com" class="hover:text-orange transition" aria-label="Twitter">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84 0 0 0 .497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/>
+          </svg>
+        </a>
+      </div>
     </div>
   </div>
 </footer>

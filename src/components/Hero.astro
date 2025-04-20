@@ -1,47 +1,44 @@
 ---
-interface Props {
+export interface Props {
+  image: string;
+  alt: string;
   title: string;
   subtitle?: string;
-  image: string;
-  fullHeight?: boolean;
-  overlayColor?: string;
-  textAlignment?: 'left' | 'center' | 'right';
+  photographerName?: string;
 }
 
-const { 
-  title, 
-  subtitle, 
-  image, 
-  fullHeight = false, 
-  overlayColor = 'rgba(0, 0, 0, 0.4)',
-  textAlignment = 'center'
-} = Astro.props;
-
-const heightClass = fullHeight ? 'min-h-screen' : 'min-h-[60vh]';
-const textAlignmentClass = {
-  'left': 'text-left items-start',
-  'center': 'text-center items-center',
-  'right': 'text-right items-end'
-}[textAlignment];
+const { image, alt, title, subtitle, photographerName } = Astro.props;
 ---
 
-<div 
-  class={`relative ${heightClass} w-full flex items-center justify-center overflow-hidden`}
-  style={`background-image: url(${image}); background-size: cover; background-position: center;`}
->
-  <div 
-    class="absolute inset-0 z-0" 
-    style={`background-color: ${overlayColor};`}
-  ></div>
+<div class="relative">
+  <!-- Hero Image -->
+  <div class="w-full h-[50vh] md:h-[70vh] relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-forest/50 to-forest/70"></div>
+    <img 
+      src={image} 
+      alt={alt} 
+      class="w-full h-full object-cover"
+    />
+    
+    <!-- Photo Credit -->
+    {photographerName && (
+      <div class="absolute bottom-2 right-4 text-white/80 text-xs">
+        Photo: {photographerName}
+      </div>
+    )}
+  </div>
   
-  <div class={`container mx-auto px-4 relative z-10 flex flex-col ${textAlignmentClass}`}>
-    <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 max-w-3xl font-inter">
-      {title}
-    </h1>
-    {subtitle && 
-      <p class="text-xl md:text-2xl text-white max-w-2xl">
-        {subtitle}
-      </p>
-    }
+  <!-- Hero Content -->
+  <div class="absolute inset-0 flex items-center justify-center text-center px-4">
+    <div class="max-w-4xl">
+      <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold text-white font-inter leading-tight mb-4">
+        {title}
+      </h1>
+      {subtitle && (
+        <p class="text-lg md:text-xl text-white/90 max-w-2xl mx-auto font-source">
+          {subtitle}
+        </p>
+      )}
+    </div>
   </div>
 </div>
