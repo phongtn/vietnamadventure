@@ -1,0 +1,57 @@
+---
+import { getLanguageFromURL, getLanguageAlternatives } from '../i18n/utils';
+import { languages } from '../i18n/ui';
+
+// Get the current URL to determine the active language
+const url = Astro.url;
+const currentLang = getLanguageFromURL(url);
+const alternatives = getLanguageAlternatives(url);
+---
+
+<div class="relative" x-data="{ open: false }">
+  <button 
+    @click="open = !open" 
+    class="flex items-center gap-1 text-text hover:text-secondary transition duration-300"
+    aria-expanded="false"
+    :aria-expanded="open.toString()"
+  >
+    <span class="font-medium">{languages[currentLang]}</span>
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      class="h-4 w-4 transition-transform duration-200" 
+      :class="open ? 'rotate-180' : ''"
+      fill="none" 
+      viewBox="0 0 24 24" 
+      stroke="currentColor"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    </svg>
+  </button>
+  
+  <div 
+    x-show="open" 
+    @click.away="open = false"
+    x-transition:enter="transition ease-out duration-200"
+    x-transition:enter-start="opacity-0 translate-y-1"
+    x-transition:enter-end="opacity-100 translate-y-0"
+    x-transition:leave="transition ease-in duration-150"
+    x-transition:leave-start="opacity-100 translate-y-0"
+    x-transition:leave-end="opacity-0 translate-y-1"
+    class="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg py-1 z-50"
+    x-cloak
+  >
+    {alternatives.map(alt => (
+      <a 
+        href={alt.href} 
+        class={`block px-4 py-2 text-sm ${alt.current ? 'text-secondary font-medium' : 'text-text hover:text-secondary hover:bg-gray-50'}`}
+        hreflang={alt.lang}
+      >
+        {alt.label}
+      </a>
+    ))}
+  </div>
+</div>
+
+<style>
+  [x-cloak] { display: none !important; }
+</style>

@@ -1,34 +1,39 @@
 ---
 import Logo from "./Logo.astro";
+import { getLanguageFromURL, useTranslations } from '../i18n/utils';
+
 const currentYear = new Date().getFullYear();
+
+// Get the current language from the URL
+const lang = getLanguageFromURL(Astro.url);
+const t = useTranslations(lang);
 
 const footerLinks = [
   {
-    title: 'Activities',
+    titleKey: 'footer.activities',
     links: [
-      { name: 'Trail Running', url: '/trail-running' },
-      { name: 'Hiking', url: '/hiking' },
-      { name: 'Climbing', url: '/climbing' },
-      { name: 'Kayaking', url: '/adventures#kayaking' },
-      { name: 'Caving', url: '/adventures#caving' },
+      { nameKey: 'nav.trail-running', url: `/${lang}/trail-running` },
+      { nameKey: 'nav.hiking', url: `/${lang}/hiking` },
+      { nameKey: 'nav.climbing', url: `/${lang}/climbing` },
+      { nameKey: 'nav.adventures', url: `/${lang}/adventures` },
     ]
   },
   {
-    title: 'Regions',
+    titleKey: 'footer.regions',
     links: [
-      { name: 'North Vietnam', url: '/regions/north' },
-      { name: 'Central Vietnam', url: '/regions/central' },
-      { name: 'South Vietnam', url: '/regions/south' },
-      { name: 'Mekong Delta', url: '/regions/mekong' },
+      { name: 'North Vietnam', url: `/${lang}/regions/north` },
+      { name: 'Central Vietnam', url: `/${lang}/regions/central` },
+      { name: 'South Vietnam', url: `/${lang}/regions/south` },
+      { name: 'Mekong Delta', url: `/${lang}/regions/mekong` },
     ]
   },
   {
-    title: 'Company',
+    titleKey: 'footer.company',
     links: [
-      { name: 'About Us', url: '/about' },
-      { name: 'Contact', url: '/contact' },
-      { name: 'Privacy Policy', url: '/privacy' },
-      { name: 'Terms of Service', url: '/terms' },
+      { nameKey: 'nav.about', url: `/${lang}/about` },
+      { nameKey: 'nav.contact', url: `/${lang}/contact` },
+      { name: 'Privacy Policy', url: `/${lang}/privacy` },
+      { name: 'Terms of Service', url: `/${lang}/terms` },
     ]
   }
 ];
@@ -53,7 +58,7 @@ const socialLinks = [
         <p class="mb-6 text-white/80 max-w-md">
           Discover Vietnam's most breathtaking outdoor adventures. From mountain trails to limestone karsts, we're your guide to authentic Vietnamese wilderness experiences.
         </p>
-        
+
         <!-- Social Icons -->
         <div class="flex space-x-4">
           {socialLinks.map(social => (
@@ -65,24 +70,26 @@ const socialLinks = [
           ))}
         </div>
       </div>
-      
+
       <!-- Footer Links -->
       {footerLinks.map(section => (
         <div>
-          <h4 class="font-inter font-semibold text-lg mb-4">{section.title}</h4>
+          <h4 class="font-inter font-semibold text-lg mb-4">{t(section.titleKey as any)}</h4>
           <ul class="space-y-3">
             {section.links.map(link => (
               <li>
-                <a href={link.url} class="text-white/80 hover:text-white transition duration-300">{link.name}</a>
+                <a href={link.url} class="text-white/80 hover:text-white transition duration-300">
+                  {link.nameKey ? t(link.nameKey as any) : link.name}
+                </a>
               </li>
             ))}
           </ul>
         </div>
       ))}
     </div>
-    
+
     <div class="border-t border-white/20 mt-12 pt-8 text-center text-white/60">
-      <p>&copy; {currentYear} VietnamADV. All rights reserved.</p>
+      <p>&copy; {currentYear} VietnamADV. {t('footer.copyright' as any)}</p>
     </div>
   </div>
 </footer>

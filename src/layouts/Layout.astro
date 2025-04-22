@@ -2,6 +2,7 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
+import { getLanguageFromURL, getLanguageAlternatives } from '../i18n/utils';
 
 export interface Props {
   title: string;
@@ -9,36 +10,52 @@ export interface Props {
   image?: string;
 }
 
-const { 
-  title, 
-  description = "Discover Vietnam's outdoor adventures for trail running, hiking, climbing, and more.", 
+const {
+  title,
+  description = "Discover Vietnam's outdoor adventures for trail running, hiking, climbing, and more.",
   image = "https://images.unsplash.com/photo-1502747812021-0ae746b6c23f"
 } = Astro.props;
+
+// Get the current language from the URL
+const lang = getLanguageFromURL(Astro.url);
+
+// Get language alternatives for hreflang tags
+const alternatives = getLanguageAlternatives(Astro.url);
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
-    
+
+    <!-- Language alternates for SEO -->
+    {alternatives.map(alt => (
+      <link rel="alternate" hreflang={alt.lang} href={new URL(alt.href, Astro.site).toString()} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={new URL(`/en${Astro.url.pathname.replace(/^\/[a-z]{2}(\/|$)/, '/')}`, Astro.site).toString()} />
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.url} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={image} />
-    
+    <meta property="og:locale" content={lang === 'en' ? 'en_US' : lang === 'fr' ? 'fr_FR' : 'es_ES'} />
+    {alternatives.map(alt => (
+      alt.lang !== lang && <meta property="og:locale:alternate" content={alt.lang === 'en' ? 'en_US' : alt.lang === 'fr' ? 'fr_FR' : 'es_ES'} />
+    ))}
+
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={Astro.url} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={image} />
-    
+
     <title>{title} | VietnamADV</title>
   </head>
   <body class="min-h-screen flex flex-col">

@@ -9,4 +9,16 @@ export default defineConfig({
     tailwind(),
     alpinejs(),
   ],
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'fr', 'es'],
+    routing: {
+      prefixDefaultLocale: true,
+      strategy: 'prefix'
+    },
+    fallback: {
+      'fr': 'en',
+      'es': 'en'
+    }
+  },
 });

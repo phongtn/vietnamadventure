@@ -2,6 +2,7 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
+import { getLanguageFromURL, getLanguageAlternatives } from '../i18n/utils';
 
 interface Props {
   title: string;
@@ -9,22 +10,34 @@ interface Props {
 }
 
 const { title, description = "Discover the best outdoor adventures in Vietnam - from trail running and hiking to rock climbing and more." } = Astro.props;
+
+// Get the current language from the URL
+const lang = getLanguageFromURL(Astro.url);
+
+// Get language alternatives for hreflang tags
+const alternatives = getLanguageAlternatives(Astro.url);
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title} | VietnamADV - Outdoor Adventures</title>
     <meta name="description" content={description} />
-    
+
+    <!-- Language alternates for SEO -->
+    {alternatives.map(alt => (
+      <link rel="alternate" hreflang={alt.lang} href={new URL(alt.href, Astro.site).toString()} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={new URL(`/en${Astro.url.pathname.replace(/^\/[a-z]{2}(\/|$)/, '/')}`, Astro.site).toString()} />
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- Alpine.js for minimal interactivity -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
   </head>

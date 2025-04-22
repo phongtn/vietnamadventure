@@ -1,0 +1,206 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import HeroSection from '../../components/HeroSection.astro';
+import FeatureCard from '../../components/FeatureCard.astro';
+import CategorySection from '../../components/CategorySection.astro';
+import AdventureCard from '../../components/AdventureCard.astro';
+import Newsletter from '../../components/Newsletter.astro';
+import { getLanguageFromURL, useTranslations } from '../../i18n/utils';
+
+// Get the current language from the URL
+const lang = getLanguageFromURL(Astro.url);
+const t = useTranslations(lang);
+
+// Define featured activities and categories
+const featuredActivities = [
+  {
+    title: "Course sur Sentier à Sapa",
+    description: "Explorez de magnifiques rizières en terrasses sur des sentiers de montagne difficiles avec des vues à couper le souffle sur le nord du Vietnam.",
+    image: "https://images.unsplash.com/photo-1528127269322-539801943592",
+    link: `/${lang}/trail-running/sapa-trails`,
+    tagline: "Populaire"
+  },
+  {
+    title: "Ascension du Sommet Fansipan",
+    description: "Conquérez le plus haut sommet d'Indochine à travers des forêts anciennes et des prairies alpines lors de cette expédition inoubliable de 2 jours.",
+    image: "https://images.unsplash.com/photo-1502747812021-0ae746b6c23f",
+    link: `/${lang}/hiking/fansipan`,
+    tagline: "Difficile"
+  },
+  {
+    title: "Escalade sur l'Île de Cat Ba",
+    description: "Escaladez de superbes karsts calcaires s'élevant des eaux émeraude tout en profitant de voies d'escalade de classe mondiale pour tous les niveaux.",
+    image: "https://images.unsplash.com/photo-1472087982327-49192446ed6b",
+    link: `/${lang}/climbing/cat-ba-island`,
+    tagline: "À Essayer"
+  },
+];
+
+const categories = [
+  {
+    title: "Course sur Sentier",
+    description: "Aventures rapides sur les chemins de montagne du Vietnam",
+    image: "https://images.unsplash.com/photo-1489659831163-682b5af42225",
+    link: `/${lang}/trail-running`
+  },
+  {
+    title: "Randonnée & Trekking",
+    description: "Des randonnées d'une journée aux voyages épiques de plusieurs jours",
+    image: "https://images.unsplash.com/photo-1571407298153-9a051d190225",
+    link: `/${lang}/hiking`
+  },
+  {
+    title: "Escalade",
+    description: "Aventures verticales sur les karsts calcaires et les montagnes",
+    image: "https://images.unsplash.com/photo-1529271230144-e8c648ef570d",
+    link: `/${lang}/climbing`
+  }
+];
+
+const featuredAdventures = [
+  {
+    title: "Sentier de la Montagne Ba Vi",
+    location: "Province de Hanoi",
+    difficulty: "Modéré",
+    duration: "1 Jour",
+    image: "https://images.unsplash.com/photo-1452626038306-9aae5e071dd3",
+    link: `/${lang}/trail-running/ba-vi-mountain`,
+    featured: true
+  },
+  {
+    title: "Trek de la Boucle Ha Giang",
+    location: "Province de Ha Giang",
+    difficulty: "Difficile",
+    duration: "4 Jours",
+    image: "https://images.unsplash.com/photo-1678099006439-dba9e4d3f9f5",
+    link: `/${lang}/hiking/ha-giang-loop`,
+    featured: false
+  },
+  {
+    title: "Zone d'Escalade de Huu Lung",
+    location: "Province de Lang Son",
+    difficulty: "Modéré",
+    duration: "1-2 Jours",
+    image: "https://images.unsplash.com/photo-1504699439244-a7e34870c35d",
+    link: `/${lang}/climbing/huu-lung`,
+    featured: false
+  },
+  {
+    title: "Spéléologie à Phong Nha",
+    location: "Province de Quang Binh",
+    difficulty: "Difficile",
+    duration: "3 Jours",
+    image: "https://images.unsplash.com/photo-1523065144972-e5f5c9ea6ed9",
+    link: `/${lang}/adventures/phong-nha-caving`,
+    featured: false
+  }
+];
+
+const testimonials = [
+  {
+    name: "Sarah J.",
+    text: "Le guide de course sur sentier de Sapa était incroyablement détaillé et m'a aidé à découvrir des itinéraires que je n'aurais jamais trouvés seule. Une expérience spectaculaire !",
+    location: "États-Unis"
+  },
+  {
+    name: "Thomas L.",
+    text: "Les recommandations de randonnée de VietnamADV à Ha Giang étaient parfaites. Les cartes détaillées et les connaissances locales ont rendu notre trek inoubliable.",
+    location: "Australie"
+  },
+  {
+    name: "Mai T.",
+    text: "En tant que grimpeuse vietnamienne locale, je suis impressionnée par la précision et la sensibilité culturelle de leurs guides d'escalade. Cette plateforme est un trésor.",
+    location: "Vietnam"
+  }
+];
+---
+
+<Layout 
+  title={t('home.hero.title')}
+  description="Découvrez les aventures de plein air les plus époustouflantes du Vietnam avec nos guides sélectionnés pour la course sur sentier, la randonnée, l'escalade et les activités nature."
+  image="https://images.unsplash.com/photo-1502747812021-0ae746b6c23f"
+>
+  <!-- Hero Section -->
+  <HeroSection
+    title={t('home.hero.title')}
+    subtitle={t('home.hero.subtitle')}
+    backgroundImage="https://images.unsplash.com/photo-1502747812021-0ae746b6c23f"
+    buttonText={t('home.hero.cta')}
+    buttonLink={`/${lang}/adventures`}
+  />
+  
+  <!-- Featured Activities -->
+  <section class="py-16">
+    <div class="container-custom">
+      <h2 class="text-3xl md:text-4xl font-inter font-bold mb-4 text-center">{t('home.featured.title')}</h2>
+      <p class="text-lg text-text/80 max-w-3xl mx-auto text-center mb-12">
+        {t('home.featured.subtitle')}
+      </p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {featuredActivities.map(activity => (
+          <FeatureCard 
+            title={activity.title} 
+            description={activity.description}
+            image={activity.image}
+            link={activity.link}
+            tagline={activity.tagline}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Categories Section -->
+  <CategorySection
+    title={t('home.categories.title')}
+    subtitle={t('home.categories.subtitle')}
+    categories={categories}
+  />
+  
+  <!-- Featured Adventures -->
+  <section class="py-16 bg-background">
+    <div class="container-custom">
+      <h2 class="text-3xl md:text-4xl font-inter font-bold mb-4 text-center">{t('home.popular.title')}</h2>
+      <p class="text-lg text-text/80 max-w-3xl mx-auto text-center mb-12">
+        {t('home.popular.subtitle')}
+      </p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {featuredAdventures.map(adventure => (
+          <AdventureCard
+            title={adventure.title}
+            location={adventure.location}
+            difficulty={adventure.difficulty}
+            duration={adventure.duration}
+            image={adventure.image}
+            link={adventure.link}
+            featured={adventure.featured}
+          />
+        ))}
+      </div>
+      
+      <div class="text-center mt-12">
+        <a href={`/${lang}/adventures`} class="btn btn-primary">{t('common.viewAll')}</a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- CTA Section -->
+  <section class="py-20 bg-primary text-white">
+    <div class="container-custom text-center">
+      <h2 class="text-3xl md:text-4xl font-inter font-bold mb-4">{t('home.cta.title')}</h2>
+      <p class="text-xl text-white/80 max-w-3xl mx-auto mb-8">
+        {t('home.cta.text')}
+      </p>
+      
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href={`/${lang}/adventures`} class="btn bg-white text-primary hover:bg-white/90">{t('home.cta.button1')}</a>
+        <a href={`/${lang}/contact`} class="btn border-2 border-white text-white hover:bg-white hover:text-primary">{t('home.cta.button2')}</a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Newsletter -->
+  <Newsletter />
+</Layout>
