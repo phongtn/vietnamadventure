@@ -20,17 +20,17 @@ export function useTranslations(lang: keyof typeof ui) {
 export function getLocalizedURL(url: URL, lang: string) {
   const currentLang = getLanguageFromURL(url);
   const pathname = url.pathname;
-  
+
   // If we're on the homepage
   if (pathname === '/' || pathname === `/${currentLang}/`) {
     return `/${lang}/`;
   }
-  
+
   // If we already have a language prefix
   if (pathname.startsWith(`/${currentLang}/`)) {
     return pathname.replace(`/${currentLang}/`, `/${lang}/`);
   }
-  
+
   // If we don't have a language prefix yet
   return `/${lang}${pathname}`;
 }
@@ -52,4 +52,20 @@ export function formatDate(date: Date, lang: string) {
     month: 'long',
     day: 'numeric'
   }).format(date);
+}
+
+// Helper function to ensure all internal links have the correct language prefix
+export function localizeLink(path: string, lang: string): string {
+  // If the path already has a language prefix, don't modify it
+  if (/^\/[a-z]{2}\//.test(path)) {
+    return path;
+  }
+
+  // If the path is just a slash, return the language home
+  if (path === '/') {
+    return `/${lang}/`;
+  }
+
+  // Otherwise, add the language prefix
+  return `/${lang}${path.startsWith('/') ? path : `/${path}`}`;
 }

@@ -1,0 +1,477 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import HeroSection from '../../../components/HeroSection.astro';
+import AdventureCard from '../../../components/AdventureCard.astro';
+import FilterBar from '../../../components/FilterBar.astro';
+import Newsletter from '../../../components/Newsletter.astro';
+import { getLanguageFromURL, useTranslations, localizeLink } from '../../../i18n/utils';
+import { languages } from '../../../i18n/ui';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(lang => ({
+    params: { lang }
+  }));
+}
+
+// Get the current language from the URL
+const { lang } = Astro.params;
+const t = useTranslations(lang as keyof typeof languages);
+
+// Hiking adventures data
+const hikingRoutes = [
+  {
+    title: "Fansipan Summit Trek",
+    location: "Lao Cai Province",
+    difficulty: "Challenging",
+    duration: "2-3 Days",
+    image: "https://images.unsplash.com/photo-1502747812021-0ae746b6c23f",
+    link: localizeLink("/hiking/fansipan", lang as string),
+    featured: true
+  },
+  {
+    title: "Ha Giang Loop Trek",
+    location: "Ha Giang Province",
+    difficulty: "Difficult",
+    duration: "4-5 Days",
+    image: "https://images.unsplash.com/photo-1678099006439-dba9e4d3f9f5",
+    link: localizeLink("/hiking/ha-giang-loop", lang as string),
+    featured: false
+  },
+  {
+    title: "Pu Luong Nature Reserve",
+    location: "Thanh Hoa Province",
+    difficulty: "Moderate",
+    duration: "2 Days",
+    image: "https://images.unsplash.com/photo-1571407298153-9a051d190225",
+    link: localizeLink("/hiking/pu-luong-nature-reserve", lang as string),
+    featured: false
+  },
+  {
+    title: "Mu Cang Chai Rice Terraces",
+    location: "Yen Bai Province",
+    difficulty: "Moderate",
+    duration: "2-3 Days",
+    image: "https://images.unsplash.com/photo-1517475020140-cd7f966b0523",
+    link: localizeLink("/hiking/mu-cang-chai", lang as string),
+    featured: false
+  },
+  {
+    title: "Cat Ba National Park",
+    location: "Hai Phong",
+    difficulty: "Moderate",
+    duration: "1 Day",
+    image: "https://images.unsplash.com/photo-1555041071-a375ca2bdd64",
+    link: localizeLink("/hiking/cat-ba-national-park", lang as string),
+    featured: false
+  },
+  {
+    title: "Bach Moc Luong Tu Mountain",
+    location: "Lao Cai Province",
+    difficulty: "Challenging",
+    duration: "3 Days",
+    image: "https://images.unsplash.com/photo-1670645183275-3d2181ed952c",
+    link: localizeLink("/hiking/bach-moc-luong-tu", lang as string),
+    featured: false
+  },
+  {
+    title: "Ta Nang - Phan Dung",
+    location: "Lam Dong & Ninh Thuan Provinces",
+    difficulty: "Difficult",
+    duration: "3 Days",
+    image: "https://images.unsplash.com/photo-1502747812021-0ae746b6c23f",
+    link: localizeLink("/hiking/ta-nang-phan-dung", lang as string),
+    featured: false
+  },
+  {
+    title: "Bidoup Nui Ba National Park",
+    location: "Lam Dong Province",
+    difficulty: "Moderate",
+    duration: "2 Days",
+    image: "https://images.unsplash.com/photo-1678099006439-dba9e4d3f9f5",
+    link: localizeLink("/hiking/bidoup-nui-ba", lang as string),
+    featured: false
+  }
+];
+
+// Filter options specifically for hiking
+const durations = [
+  { value: '1-day', label: '1 Day' },
+  { value: '2-3-days', label: '2-3 Days' },
+  { value: '4-5-days', label: '4-5 Days' },
+  { value: 'week-plus', label: 'Week+' },
+];
+
+const regions = [
+  { value: 'north', label: 'North Vietnam' },
+  { value: 'central', label: 'Central Vietnam' },
+  { value: 'south', label: 'South Vietnam' },
+  { value: 'highlands', label: 'Central Highlands' },
+];
+
+// Hiking-specific features
+const features = [
+  { value: 'waterfalls', label: 'Waterfalls' },
+  { value: 'villages', label: 'Ethnic Villages' },
+  { value: 'peaks', label: 'Mountain Peaks' },
+  { value: 'rice-terraces', label: 'Rice Terraces' },
+  { value: 'caves', label: 'Caves' },
+];
+---
+
+<Layout 
+  title="Hiking & Trekking in Vietnam" 
+  description="Explore Vietnam's diverse landscapes on foot with our comprehensive hiking and trekking guides, from gentle day hikes to multi-day expeditions."
+  image="https://images.unsplash.com/photo-1502747812021-0ae746b6c23f"
+>
+  <!-- Hero Section -->
+  <HeroSection
+    title="Hiking & Trekking in Vietnam"
+    subtitle="From the misty mountains of the north to the tropical forests of the south, discover Vietnam's most breathtaking trails"
+    backgroundImage="https://images.unsplash.com/photo-1502747812021-0ae746b6c23f"
+    buttonText="Find Your Trail"
+    buttonLink="#hiking-routes"
+  />
+  
+  <!-- Introduction -->
+  <section class="py-12 bg-white">
+    <div class="container-custom">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-inter font-bold mb-6">Explore Vietnam on Foot</h2>
+        <p class="text-lg text-text/80 mb-4">
+          Vietnam's diverse terrain offers hikers and trekkers an incredible array of experiences, from scaling Indochina's highest peak to wandering through terraced rice fields and exploring remote ethnic minority villages.
+        </p>
+        <p class="text-lg text-text/80">
+          Our comprehensive hiking guides provide essential information on trail conditions, logistics, cultural insights, and what to expect on your journey through Vietnam's spectacular landscapes.
+        </p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Filter Section -->
+  <section id="hiking-routes" class="py-12 bg-background">
+    <div class="container-custom">
+      <h2 class="text-3xl font-inter font-bold mb-8">Explore Hiking & Trekking Routes</h2>
+      
+      <FilterBar 
+        difficulties={[
+          { value: 'easy', label: 'Easy' },
+          { value: 'moderate', label: 'Moderate' },
+          { value: 'difficult', label: 'Difficult' },
+          { value: 'challenging', label: 'Challenging' },
+        ]}
+        durations={durations}
+        regions={regions}
+        activities={features}
+      />
+      
+      <!-- Hiking Adventures -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {hikingRoutes.map(route => (
+          <AdventureCard
+            title={route.title}
+            location={route.location}
+            difficulty={route.difficulty}
+            duration={route.duration}
+            image={route.image}
+            link={route.link}
+            featured={route.featured}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Hiking Seasons & Weather -->
+  <section class="py-16 bg-white">
+    <div class="container-custom">
+      <h2 class="text-3xl font-inter font-bold mb-10 text-center">Best Hiking Seasons in Vietnam</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-background p-6 rounded-lg shadow-md">
+          <h3 class="text-xl font-inter font-semibold mb-3 text-center">Northern Vietnam</h3>
+          <div class="space-y-4">
+            <div>
+              <p class="font-inter font-medium text-primary">Best: Sep - Nov, Mar - May</p>
+              <p class="text-text/80 text-sm">Clear skies, moderate temperatures, dry trails</p>
+            </div>
+            <div>
+              <p class="font-inter font-medium text-secondary">Challenging: Jun - Aug</p>
+              <p class="text-text/80 text-sm">Monsoon season, heavy rainfall, muddy trails</p>
+            </div>
+            <div>
+              <p class="font-inter font-medium text-text">Avoid: Dec - Feb</p>
+              <p class="text-text/80 text-sm">Cold and foggy in mountains, limited visibility</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-background p-6 rounded-lg shadow-md">
+          <h3 class="text-xl font-inter font-semibold mb-3 text-center">Central Vietnam</h3>
+          <div class="space-y-4">
+            <div>
+              <p class="font-inter font-medium text-primary">Best: Feb - Aug</p>
+              <p class="text-text/80 text-sm">Dry season, stunning coastline views</p>
+            </div>
+            <div>
+              <p class="font-inter font-medium text-secondary">Challenging: Sep - Nov</p>
+              <p class="text-text/80 text-sm">Typhoon season, potential flooding</p>
+            </div>
+            <div>
+              <p class="font-inter font-medium text-text">Avoid: Oct - Dec</p>
+              <p class="text-text/80 text-sm">Heavy rainfall in many areas, trail closures</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-background p-6 rounded-lg shadow-md">
+          <h3 class="text-xl font-inter font-semibold mb-3 text-center">Southern Vietnam</h3>
+          <div class="space-y-4">
+            <div>
+              <p class="font-inter font-medium text-primary">Best: Nov - Apr</p>
+              <p class="text-text/80 text-sm">Dry season, consistent warm weather</p>
+            </div>
+            <div>
+              <p class="font-inter font-medium text-secondary">Challenging: May - Oct</p>
+              <p class="text-text/80 text-sm">Wet season, afternoon thunderstorms</p>
+            </div>
+            <div>
+              <p class="font-inter font-medium text-text">Avoid: Jul - Sep</p>
+              <p class="text-text/80 text-sm">Peak rainfall, muddy conditions</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-background p-6 rounded-lg shadow-md">
+          <h3 class="text-xl font-inter font-semibold mb-3 text-center">Central Highlands</h3>
+          <div class="space-y-4">
+            <div>
+              <p class="font-inter font-medium text-primary">Best: Nov - Mar</p>
+              <p class="text-text/80 text-sm">Dry season, cooler temperatures</p>
+            </div>
+            <div>
+              <p class="font-inter font-medium text-secondary">Challenging: Apr - Jun</p>
+              <p class="text-text/80 text-sm">Hot and dry, reduced water sources</p>
+            </div>
+            <div>
+              <p class="font-inter font-medium text-text">Avoid: Jul - Oct</p>
+              <p class="text-text/80 text-sm">Monsoon season, difficult trail conditions</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Trekking Tips -->
+  <section class="py-16 bg-background">
+    <div class="container-custom">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="order-2 lg:order-1">
+          <h2 class="text-3xl font-inter font-bold mb-6">Hiking & Trekking in Vietnam: Essential Tips</h2>
+          
+          <div class="space-y-6">
+            <div class="flex">
+              <div class="flex-shrink-0 mr-4">
+                <div class="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <h3 class="font-inter text-xl font-semibold mb-2">Local Guides</h3>
+                <p class="text-text/80">For remote mountain treks, consider hiring local guides. They provide cultural insights, support local communities, and ensure you don't get lost in unfamiliar terrain.</p>
+              </div>
+            </div>
+            
+            <div class="flex">
+              <div class="flex-shrink-0 mr-4">
+                <div class="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <h3 class="font-inter text-xl font-semibold mb-2">Cultural Respect</h3>
+                <p class="text-text/80">Many trails pass through ethnic minority villages. Dress modestly, ask before taking photos, and learn a few basic Vietnamese phrases to enhance your experience.</p>
+              </div>
+            </div>
+            
+            <div class="flex">
+              <div class="flex-shrink-0 mr-4">
+                <div class="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <h3 class="font-inter text-xl font-semibold mb-2">Safety Precautions</h3>
+                <p class="text-text/80">Register with local authorities before remote treks, carry sufficient water, and check conditions before crossing streams during rainy season. Consider travel insurance with evacuation coverage.</p>
+              </div>
+            </div>
+            
+            <div class="flex">
+              <div class="flex-shrink-0 mr-4">
+                <div class="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <h3 class="font-inter text-xl font-semibold mb-2">Leave No Trace</h3>
+                <p class="text-text/80">Pack out all trash, stay on established trails to prevent erosion, and respect wildlife. Vietnam's natural beauty is best preserved through responsible hiking practices.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="order-1 lg:order-2 relative">
+          <img 
+            src="https://images.unsplash.com/photo-1571407298153-9a051d190225" 
+            alt="Hikers on a mountain trail in Vietnam"
+            class="rounded-lg shadow-xl object-cover h-[500px] w-full"
+          />
+          <div class="absolute -bottom-6 -right-6 bg-white p-4 rounded-lg shadow-lg max-w-xs hidden md:block">
+            <p class="font-inter font-semibold mb-1">Homestay Experience</p>
+            <p class="text-sm text-text/80">
+              Many multi-day treks include homestays with local families. These authentic cultural exchanges often become the highlight of a Vietnamese hiking adventure.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Essential Gear -->
+  <section class="py-16 bg-white">
+    <div class="container-custom">
+      <h2 class="text-3xl font-inter font-bold mb-10 text-center">Essential Hiking Gear for Vietnam</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-background p-6 rounded-lg shadow-md">
+          <h3 class="text-xl font-inter font-semibold mb-4">Day Hikes</h3>
+          <ul class="space-y-3">
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Daypack (20-30L)</strong>: With rain cover</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Footwear</strong>: Trail shoes or light hiking boots</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Water</strong>: 2-3 liters depending on heat</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Sun Protection</strong>: Hat, sunglasses, sunscreen</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Insect Repellent</strong>: High DEET for jungle areas</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Rain Jacket</strong>: Lightweight, packable</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>First Aid Kit</strong>: Basic supplies</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Map/GPS</strong>: Don't rely solely on cellular service</span>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="bg-background p-6 rounded-lg shadow-md">
+          <h3 class="text-xl font-inter font-semibold mb-4">Multi-Day Treks</h3>
+          <ul class="space-y-3">
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Backpack (40-50L)</strong>: With internal frame</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Hiking Boots</strong>: Well broken-in, waterproof</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Clothing</strong>: Quick-dry, layers, rain gear</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Sleep System</strong>: Light sleeping bag/liner</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Trekking Poles</strong>: Helpful for steep terrain</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Headlamp</strong>: With extra batteries</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Water Purification</strong>: Tablets or filter</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Comprehensive First Aid</strong>: Including blister treatment</span>
+            </li>
+            <li class="flex items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span><strong>Power Bank</strong>: For emergency phone charging</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Newsletter -->
+  <Newsletter 
+    title="Stay Updated on Vietnam's Best Hiking Routes"
+    description="Subscribe for seasonal trekking updates, new trail information, and exclusive hiking guides."
+  />
+</Layout>

@@ -1,21 +1,22 @@
 ---
 import Logo from './Logo.astro';
 import LanguageSelector from './LanguageSelector.astro';
-import { getLanguageFromURL, useTranslations } from '../i18n/utils';
+import { getLanguageFromURL, useTranslations, localizeLink } from '../i18n/utils';
+import { languages } from '../i18n/ui';
 
 // Get the current language from the URL
 const lang = getLanguageFromURL(Astro.url);
-const t = useTranslations(lang);
+const t = useTranslations(lang as keyof typeof languages);
 
 // Define navigation items with translation keys
 const navItems = [
-  { titleKey: 'nav.home', path: `/${lang}/` },
-  { titleKey: 'nav.trail-running', path: `/${lang}/trail-running` },
-  { titleKey: 'nav.hiking', path: `/${lang}/hiking` },
-  { titleKey: 'nav.climbing', path: `/${lang}/climbing` },
-  { titleKey: 'nav.adventures', path: `/${lang}/adventures` },
-  { titleKey: 'nav.about', path: `/${lang}/about` },
-  { titleKey: 'nav.contact', path: `/${lang}/contact` },
+  { titleKey: 'nav.home', path: localizeLink('/', lang) },
+  { titleKey: 'nav.trail-running', path: localizeLink('/trail-running', lang) },
+  { titleKey: 'nav.hiking', path: localizeLink('/hiking', lang) },
+  { titleKey: 'nav.climbing', path: localizeLink('/climbing', lang) },
+  { titleKey: 'nav.adventures', path: localizeLink('/adventures', lang) },
+  { titleKey: 'nav.about', path: localizeLink('/about', lang) },
+  { titleKey: 'nav.contact', path: localizeLink('/contact', lang) },
 ];
 
 const currentPath = Astro.url.pathname;

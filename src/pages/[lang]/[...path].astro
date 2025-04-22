@@ -1,0 +1,74 @@
+---
+import { languages, defaultLanguage } from '../../i18n/ui';
+
+export function getStaticPaths() {
+  // Generate paths for all supported languages and all possible paths
+  const paths = [];
+  
+  // Define the list of valid routes that exist in the root directory
+  const validRoutes = [
+    'hiking',
+    'trail-running',
+    'climbing',
+    'adventures',
+    'about',
+    'contact',
+    // Add other valid routes here
+  ];
+  
+  // For each language and route, create a path
+  Object.keys(languages).forEach(lang => {
+    validRoutes.forEach(route => {
+      paths.push({
+        params: { lang, path: route },
+        props: { route }
+      });
+    });
+  });
+  
+  return paths;
+}
+
+const { lang, path } = Astro.params;
+const { route } = Astro.props;
+
+// Validate that this is a supported language
+const isValidLang = Object.keys(languages).includes(lang);
+if (!isValidLang) {
+  return Astro.redirect(`/${defaultLanguage}/${path}`);
+}
+
+// Construct the path to the actual content
+const contentPath = `/${path}`;
+---
+
+<meta http-equiv="refresh" content={`0;url=${contentPath}`} />
+
+<script define:vars={{ contentPath }}>
+  // This script will run on the client side to redirect to the correct page
+  window.location.pathname = contentPath;
+</script>
+
+<h1>Redirecting...</h1>
+<p>If you are not redirected automatically, <a href={contentPath}>click here</a>.</p>
+
+<style>
+  body {
+    font-family: system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    padding: 1rem;
+    text-align: center;
+  }
+  h1 {
+    margin-bottom: 0.5rem;
+  }
+  a {
+    color: #2B5329;
+    text-decoration: underline;
+  }
+</style>

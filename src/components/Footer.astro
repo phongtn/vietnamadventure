@@ -1,39 +1,40 @@
 ---
 import Logo from "./Logo.astro";
-import { getLanguageFromURL, useTranslations } from '../i18n/utils';
+import { getLanguageFromURL, useTranslations, localizeLink } from '../i18n/utils';
+import { languages } from '../i18n/ui';
 
 const currentYear = new Date().getFullYear();
 
 // Get the current language from the URL
 const lang = getLanguageFromURL(Astro.url);
-const t = useTranslations(lang);
+const t = useTranslations(lang as keyof typeof languages);
 
 const footerLinks = [
   {
     titleKey: 'footer.activities',
     links: [
-      { nameKey: 'nav.trail-running', url: `/${lang}/trail-running` },
-      { nameKey: 'nav.hiking', url: `/${lang}/hiking` },
-      { nameKey: 'nav.climbing', url: `/${lang}/climbing` },
-      { nameKey: 'nav.adventures', url: `/${lang}/adventures` },
+      { nameKey: 'nav.trail-running', url: localizeLink('/trail-running', lang) },
+      { nameKey: 'nav.hiking', url: localizeLink('/hiking', lang) },
+      { nameKey: 'nav.climbing', url: localizeLink('/climbing', lang) },
+      { nameKey: 'nav.adventures', url: localizeLink('/adventures', lang) },
     ]
   },
   {
     titleKey: 'footer.regions',
     links: [
-      { name: 'North Vietnam', url: `/${lang}/regions/north` },
-      { name: 'Central Vietnam', url: `/${lang}/regions/central` },
-      { name: 'South Vietnam', url: `/${lang}/regions/south` },
-      { name: 'Mekong Delta', url: `/${lang}/regions/mekong` },
+      { name: 'North Vietnam', url: localizeLink('/regions/north', lang) },
+      { name: 'Central Vietnam', url: localizeLink('/regions/central', lang) },
+      { name: 'South Vietnam', url: localizeLink('/regions/south', lang) },
+      { name: 'Mekong Delta', url: localizeLink('/regions/mekong', lang) },
     ]
   },
   {
     titleKey: 'footer.company',
     links: [
-      { nameKey: 'nav.about', url: `/${lang}/about` },
-      { nameKey: 'nav.contact', url: `/${lang}/contact` },
-      { name: 'Privacy Policy', url: `/${lang}/privacy` },
-      { name: 'Terms of Service', url: `/${lang}/terms` },
+      { nameKey: 'nav.about', url: localizeLink('/about', lang) },
+      { nameKey: 'nav.contact', url: localizeLink('/contact', lang) },
+      { name: 'Privacy Policy', url: localizeLink('/privacy', lang) },
+      { name: 'Terms of Service', url: localizeLink('/terms', lang) },
     ]
   }
 ];
