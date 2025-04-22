@@ -3,8 +3,8 @@ import { languages, defaultLanguage } from '../../i18n/ui';
 
 export function getStaticPaths() {
   // Generate paths for all supported languages and all possible paths
-  const paths = [];
-  
+  const paths: Array<{ params: { lang: string, path: string }, props?: { route: string } }> = [];
+
   // Define the list of valid routes that exist in the root directory
   const validRoutes = [
     'hiking',
@@ -15,22 +15,25 @@ export function getStaticPaths() {
     'contact',
     // Add other valid routes here
   ];
-  
+
   // For each language and route, create a path
   Object.keys(languages).forEach(lang => {
     validRoutes.forEach(route => {
       paths.push({
-        params: { lang, path: route },
-        props: { route }
+        params: { lang, path: route }
+      });
+
+      // Also add paths for sub-routes (e.g., hiking/fansipan)
+      paths.push({
+        params: { lang, path: `${route}/*` }
       });
     });
   });
-  
+
   return paths;
 }
 
 const { lang, path } = Astro.params;
-const { route } = Astro.props;
 
 // Validate that this is a supported language
 const isValidLang = Object.keys(languages).includes(lang);
@@ -38,13 +41,14 @@ if (!isValidLang) {
   return Astro.redirect(`/${defaultLanguage}/${path}`);
 }
 
-// Construct the path to the actual content
+// Construct the path to the actual content without the language prefix
+// This ensures articles are accessible without the language path
 const contentPath = `/${path}`;
 ---
 
 <meta http-equiv="refresh" content={`0;url=${contentPath}`} />
 
-<script define:vars={{ contentPath }}>
+<script is:inline define:vars={{ contentPath }}>
   // This script will run on the client side to redirect to the correct page
   window.location.pathname = contentPath;
 </script>

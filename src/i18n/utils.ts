@@ -3,7 +3,8 @@ import { ui, defaultLanguage, languages } from './ui';
 // Get the preferred language from the URL
 export function getLanguageFromURL(url: URL) {
   const [, lang] = url.pathname.split('/');
-  if (lang in languages) {
+  // Check if the language code is one of our supported languages
+  if (Object.keys(languages).includes(lang)) {
     return lang;
   }
   return defaultLanguage;
