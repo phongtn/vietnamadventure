@@ -9,9 +9,9 @@ export default defineConfig({
     tailwind(),
     alpinejs(),
   ],
-  output: 'static', // Changed to static for simpler development
+  output: 'static', // Static output for simpler development
   server: {
-    host: '0.0.0.0',
+    host: '0.0.0.0', // Listen on all addresses
     port: 5000
   }
 });
