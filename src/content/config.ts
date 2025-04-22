@@ -19,6 +19,48 @@ const adventureSchema = z.object({
   type: z.string(),
 });
 
+// Define schema for activities
+const activitySchema = z.object({
+  title: z.string(),
+  description: z.string(),
+  coverImage: z.string(),
+  imageGallery: z.array(z.object({
+    src: z.string(),
+    alt: z.string(),
+    caption: z.string().optional(),
+  })).optional(),
+  difficulty: z.string(),
+  location: z.string(),
+  distance: z.string().optional(),
+  elevation: z.string().optional(),
+  duration: z.string(),
+  category: z.string(),
+  tags: z.array(z.string()).optional(),
+  featured: z.boolean().optional(),
+  mapCoordinates: z.object({
+    center: z.tuple([z.number(), z.number()]),
+    markers: z.array(z.object({
+      position: z.tuple([z.number(), z.number()]),
+      title: z.string().optional(),
+      description: z.string().optional(),
+    })).optional(),
+  }).optional(),
+  publishDate: z.date().optional(),
+});
+
+// Define schema for experiences
+const experienceSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+  coverImage: z.string(),
+  difficulty: z.string().optional(),
+  location: z.string(),
+  duration: z.string(),
+  category: z.string(),
+  publishDate: z.date().optional(),
+  // Add any other fields needed for experiences
+});
+
 // Define collections
 export const collections = {
   'trail-running': defineCollection({
@@ -29,5 +71,11 @@ export const collections = {
   }),
   'climbing': defineCollection({
     schema: adventureSchema,
+  }),
+  'activities': defineCollection({
+    schema: activitySchema,
+  }),
+  'experiences': defineCollection({
+    schema: experienceSchema,
   }),
 };

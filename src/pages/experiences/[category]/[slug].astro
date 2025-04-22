@@ -4,14 +4,27 @@ import ActivityLayout from '../../../layouts/ActivityLayout.astro';
 
 export async function getStaticPaths() {
   const experiences = await getCollection('experiences');
-  
-  return experiences.map(experience => ({
-    params: { 
-      category: experience.data.category.toLowerCase().replace(/ /g, '-'),
-      slug: experience.slug 
-    },
-    props: { experience }
-  }));
+
+  return experiences.map(experience => {
+    // Get the category from the frontmatter data
+    const category = experience.data.category.toLowerCase().replace(/ /g, '-');
+
+    // Extract just the filename part without the category prefix and extension
+    // For example: 'kayaking/ha-long-bay' -> 'ha-long-bay'
+    const fullSlug = experience.slug;
+    const slugParts = fullSlug.split('/');
+    const slug = slugParts[slugParts.length - 1];
+
+    console.log(`Processing: ${experience.id}, Category: ${category}, Slug: ${slug}`);
+
+    return {
+      params: {
+        category: category,
+        slug: slug
+      },
+      props: { experience }
+    };
+  });
 }
 
 const { experience } = Astro.props;
